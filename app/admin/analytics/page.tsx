@@ -1,5 +1,6 @@
 import { prisma } from "@/server/db";
 import Link from "next/link";
+import type { Experiment, PageRoute } from "@/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -56,7 +57,7 @@ export default async function AnalyticsAdmin() {
             </tr>
           </thead>
           <tbody>
-            {experiments.map((e) => {
+            {experiments.map((e: Experiment & { route: PageRoute }) => {
               const s = byExperiment.get(e.id) ?? { page_view: 0, cta_click: 0, lead_submit: 0, conversion: 0 };
               return (
                 <tr key={e.id} className="border-b border-slate-100">
