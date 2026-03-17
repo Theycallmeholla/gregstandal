@@ -114,41 +114,41 @@ export default function ApplicationPage() {
                 
                 <div className="space-y-8">
                   <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-lg flex-shrink-0 flex items-center justify-center font-black text-white text-xl shadow-md" style={{ backgroundColor: colors.primary }}>
+                    <div className="w-12 h-12 rounded-lg shrink-0 flex items-center justify-center font-black text-white text-xl shadow-md" style={{ backgroundColor: colors.primary }}>
                       1
                     </div>
                     <div>
                       <h3 className="font-black text-xl text-slate-800 mb-2">Turn visitors into qualified booked estimates</h3>
                       <ul className="space-y-2 text-slate-600 font-medium">
-                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0"/> One focused filming day</li>
-                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0"/> High‑converting video sales page that answers: Who are you, why trust you, how are you different, what happens next</li>
-                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0"/> Short pre‑qualification form with budget + timeline so tire‑kickers filter out</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 shrink-0"/> One focused filming day</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 shrink-0"/> High‑converting video sales page that answers: Who are you, why trust you, how are you different, what happens next</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 shrink-0"/> Short pre‑qualification form with budget + timeline so tire‑kickers filter out</li>
                       </ul>
                     </div>
                   </div>
 
                   <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-lg flex-shrink-0 flex items-center justify-center font-black text-white text-xl shadow-md" style={{ backgroundColor: colors.primary }}>
+                    <div className="w-12 h-12 rounded-lg shrink-0 flex items-center justify-center font-black text-white text-xl shadow-md" style={{ backgroundColor: colors.primary }}>
                       2
                     </div>
                     <div>
                       <h3 className="font-black text-xl text-slate-800 mb-2">Turn one shoot day into 3–6 months of authority content</h3>
                       <ul className="space-y-2 text-slate-600 font-medium">
-                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0"/> Weekly YouTube show + short clips for social and email</li>
-                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0"/> Stay in front of prospects and make them feel like they already know you before they book</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 shrink-0"/> Weekly YouTube show + short clips for social and email</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 shrink-0"/> Stay in front of prospects and make them feel like they already know you before they book</li>
                       </ul>
                     </div>
                   </div>
 
                   <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-lg flex-shrink-0 flex items-center justify-center font-black text-white text-xl shadow-md" style={{ backgroundColor: colors.primary }}>
+                    <div className="w-12 h-12 rounded-lg shrink-0 flex items-center justify-center font-black text-white text-xl shadow-md" style={{ backgroundColor: colors.primary }}>
                       3
                     </div>
                     <div>
                       <h3 className="font-black text-xl text-slate-800 mb-2">Own everything, track everything</h3>
                       <ul className="space-y-2 text-slate-600 font-medium">
-                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0"/> You keep all accounts, media, and assets</li>
-                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0"/> Within 90 days you have a fully tracked system designed to increase qualified bookings from existing traffic</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 shrink-0"/> You keep all accounts, media, and assets</li>
+                        <li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-green-500 shrink-0"/> Within 90 days you have a fully tracked system designed to increase qualified bookings from existing traffic</li>
                       </ul>
                     </div>
                   </div>
@@ -160,17 +160,17 @@ export default function ApplicationPage() {
                 <div className="p-8 bg-green-50 border-b border-slate-100">
                   <h4 className="font-black text-xl text-green-800 mb-4 flex items-center gap-2"><CheckCircle className="w-6 h-6"/> This is for you if…</h4>
                   <ul className="space-y-3 text-slate-700 font-medium">
-                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div> You run a home improvement or service business</li>
-                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div> You’re already spending $3k–$10k+ per month on marketing</li>
-                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div> You do good work and want more premium jobs, not more tire‑kickers</li>
+                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-green-500 mt-2 shrink-0"></div> You run a home improvement or service business</li>
+                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-green-500 mt-2 shrink-0"></div> You’re already spending $3k–$10k+ per month on marketing</li>
+                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-green-500 mt-2 shrink-0"></div> You do good work and want more premium jobs, not more tire‑kickers</li>
                   </ul>
                 </div>
                 <div className="p-8 bg-red-50">
                   <h4 className="font-black text-xl text-red-800 mb-4 flex items-center gap-2"><XCircle className="w-6 h-6"/> This is NOT for you if…</h4>
                   <ul className="space-y-3 text-slate-700 font-medium">
-                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0"></div> You’re looking for a “viral video” or six figures in two weeks</li>
-                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0"></div> You’re just starting out with no marketing or track record</li>
-                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0"></div> You aren’t willing to invest to fix conversion</li>
+                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-red-500 mt-2 shrink-0"></div> You’re looking for a “viral video” or six figures in two weeks</li>
+                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-red-500 mt-2 shrink-0"></div> You’re just starting out with no marketing or track record</li>
+                    <li className="flex items-start gap-2"><div className="w-2 h-2 rounded-full bg-red-500 mt-2 shrink-0"></div> You aren’t willing to invest to fix conversion</li>
                   </ul>
                 </div>
               </div>

@@ -115,7 +115,7 @@ export default function WireframePage() {
               <div key={i} className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
+                    <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-gray-200">
                       {placeholderImg("")}
                     </div>
                     <span className="font-bold text-sm">[Contractor Name]</span>
@@ -201,7 +201,7 @@ export default function WireframePage() {
               <ul className="space-y-4">
                 {["Reputation & Word of Mouth", "Project Referrals", "Basic Job Site Photos", "Repeat Clients"].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
                     <span className="text-sm text-gray-600">{item}</span>
                   </li>
                 ))}
@@ -216,7 +216,7 @@ export default function WireframePage() {
               <ul className="space-y-4">
                 {["No cohesive brand story", "No on‑camera proof of expertise", "Videos not tied to a lead funnel", "Website not built for high conversion"].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-orange-500 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-orange-500 shrink-0" />
                     <span className="text-sm text-gray-600">{item}</span>
                   </li>
                 ))}
@@ -325,15 +325,15 @@ export default function WireframePage() {
                   <h5 className="font-bold text-sm text-gray-900 mb-4 uppercase tracking-widest">Measurable Outcome:</h5>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                       <span className="text-sm text-gray-600">Starting Point: Stuck at $2M with low margins</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                       <span className="text-sm text-gray-600">System Installed: Cinematic Brand Film + Case Study system</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                       <span className="text-sm text-gray-600">Measurable Outcome: $450k new pipeline in 90 days</span>
                     </li>
                   </ul>
@@ -356,15 +356,15 @@ export default function WireframePage() {
                   <h5 className="font-bold text-sm text-gray-900 mb-4 uppercase tracking-widest">Measurable Outcome:</h5>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                       <span className="text-sm text-gray-600">Starting Point: 25% close rate on luxury remodels</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                       <span className="text-sm text-gray-600">System Installed: Project Walkthroughs + Meet the Team video</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                       <span className="text-sm text-gray-600">Measurable Outcome: Close rate jumped to 42%</span>
                     </li>
                   </ul>
@@ -421,7 +421,7 @@ export default function WireframePage() {
                 { step: "4", title: "Launch & Optimize", desc: "We deploy the system and refine it daily to ensure maximum lead flow and ROI.", icon: true }
               ].map((item, i) => (
                 <div key={i} className="flex gap-6 items-start group">
-                  <div className="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center font-black text-blue-800 bg-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                  <div className="w-12 h-12 rounded-xl shrink-0 flex items-center justify-center font-black text-blue-800 bg-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-all">
                     {item.step}
                   </div>
                   <div>

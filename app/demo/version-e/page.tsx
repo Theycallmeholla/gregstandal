@@ -104,7 +104,7 @@ export default function WireframePage() {
               <div key={i} className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
+                    <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-gray-200">
                       {placeholderImg("[]")}
                     </div>
                     <span className="font-bold text-sm">[Name Placeholder]</span>
@@ -178,7 +178,7 @@ export default function WireframePage() {
               <ul className="space-y-4">
                 {[1, 2, 3, 4].map(i => (
                   <li key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
                     <span className="text-sm text-gray-600">[Positive item placeholder text]</span>
                   </li>
                 ))}
@@ -193,7 +193,7 @@ export default function WireframePage() {
               <ul className="space-y-4">
                 {[1, 2, 3, 4].map(i => (
                   <li key={i} className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-orange-500 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-orange-500 shrink-0" />
                     <span className="text-sm text-gray-600">[Negative item placeholder text]</span>
                   </li>
                 ))}
@@ -282,7 +282,7 @@ export default function WireframePage() {
                   <ul className="space-y-3">
                     {[1, 2, 3].map(j => (
                       <li key={j} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                         <span className="text-sm text-gray-600">[Result bullet point placeholder]</span>
                       </li>
                     ))}
@@ -307,7 +307,7 @@ export default function WireframePage() {
                   <ul className="space-y-3">
                     {[1, 2, 3, 4].map(j => (
                       <li key={j} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                         <span className="text-sm text-gray-600">[Result bullet point placeholder]</span>
                       </li>
                     ))}
@@ -361,7 +361,7 @@ export default function WireframePage() {
                   <ul className="space-y-3">
                     {[1, 2, 3, 4].map(j => (
                       <li key={j} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                         <span className="text-sm text-gray-600">[Result bullet point placeholder]</span>
                       </li>
                     ))}
@@ -401,7 +401,7 @@ export default function WireframePage() {
                 { step: "5", title: "[Step 5 Title Placeholder]", desc: "[Description of the final phase and success state.]", icon: true }
               ].map((item, i) => (
                 <div key={i} className="flex gap-6 items-start">
-                  <div className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-blue-800 bg-blue-100">
+                  <div className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center font-bold text-blue-800 bg-blue-100">
                     {item.step}
                   </div>
                   <div>

@@ -87,7 +87,7 @@ export default function BrandBuildersV3Lean() {
                     key={idx}
                     src={logo.src}
                     alt={logo.alt}
-                    className="h-10 md:h-14 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 flex-shrink-0"
+                    className="h-10 md:h-14 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 shrink-0"
                   />
                 ))}
               </div>

@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import {
   PlayCircle,
   Play,
@@ -87,7 +89,7 @@ export default function NewCapeBrandBuilders() {
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-center md:justify-start">
           <div className="flex items-center gap-2">
             {/* Live site logo */}
-            <img src="/gregory-standal-sig-logo-blue.svg" alt="Greg Standal" className="h-10 cursor-pointer hover:opacity-80 transition" />
+            <Image src="/gregory-standal-sig-logo-blue.svg" alt="Greg Standal" width={180} height={40} className="h-10 w-auto cursor-pointer hover:opacity-80 transition" />
           </div>
         </div>
       </header>
@@ -113,7 +115,7 @@ export default function NewCapeBrandBuilders() {
           
           {/* Hero VSL Video Emulation */}
           <div className="relative w-full max-w-4xl mx-auto aspect-video bg-black rounded-2xl shadow-2xl overflow-hidden mb-10 group cursor-pointer border border-slate-200" onClick={() => setIsVideoModalOpen(true)}>
-             <img src="/greg-video-thumbnail.png" alt="VSL Video Thumbnail" className="w-full h-full object-cover opacity-70 group-hover:scale-105 transition duration-500" />
+             <Image src="/greg-video-thumbnail.png" alt="VSL Video Thumbnail" fill className="object-cover opacity-70 group-hover:scale-105 transition duration-500" />
              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.yellow }}>
                   <Play className="w-8 h-8 text-black fill-black ml-1" />
@@ -123,14 +125,14 @@ export default function NewCapeBrandBuilders() {
 
           {/* Primary CTA Button */}
           <div className="flex flex-col items-center gap-4">
-            <a
+            <Link
               href="#cta-section"
               onClick={scrollToCTA}
               className="group text-white px-10 py-5 rounded-full font-black text-xl md:text-2xl transition-all shadow-xl hover:-translate-y-1 active:scale-95 flex items-center gap-3 relative overflow-hidden uppercase"
               style={{ backgroundColor: colors.accent }}
             >
               Book Your Brand Strategy Call
-            </a>
+            </Link>
             
             {/* Directly under Hero: Built specifically for... */}
             <div className="max-w-2xl mx-auto mt-4">
@@ -158,11 +160,13 @@ export default function NewCapeBrandBuilders() {
           <div className="relative mb-16 overflow-hidden mask-image-edges">
             <div className="flex animate-scroll gap-12 items-center">
               {[...clientLogos, ...clientLogos].map((logo, idx) => (
-                <img
+                <Image
                   key={idx}
                   src={logo.src}
                   alt={logo.alt}
-                  className="h-10 md:h-14 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 flex-shrink-0"
+                  width={140}
+                  height={56}
+                  className="h-10 md:h-14 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 shrink-0"
                 />
               ))}
             </div>
@@ -180,23 +184,23 @@ export default function NewCapeBrandBuilders() {
 
           {/* Proof Block Repeated CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-8">
-            <a
+            <Link
               href="#video-case-study"
               className="flex items-center justify-center gap-2 bg-white border border-slate-200 px-8 py-4 rounded-full font-black text-lg hover:bg-slate-50 transition shadow-sm w-full sm:w-auto"
               style={{ color: colors.primary }}
             >
-              <PlayCircle className="w-6 h-6 flex-shrink-0 text-[#f1b40c]" />
+              <PlayCircle className="w-6 h-6 shrink-0 text-[#f1b40c]" />
               See how it works (3-min case study)
-            </a>
+            </Link>
             <span className="text-slate-400 font-bold hidden sm:block">OR</span>
-            <a
+            <Link
               href="#cta-section"
               onClick={scrollToCTA}
               className="text-white px-8 py-4 rounded-full font-black text-lg transition shadow-md hover:-translate-y-1 w-full sm:w-auto text-center uppercase"
               style={{ backgroundColor: colors.accent }}
             >
               Book Your Brand Strategy Call
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -217,7 +221,7 @@ export default function NewCapeBrandBuilders() {
             {caseStudies.slice(0, 3).map((study, idx) => (
               <div key={idx} className="group flex flex-col bg-slate-50 rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition duration-300">
                 <div className="relative aspect-video bg-black overflow-hidden cursor-pointer" onClick={() => setIsVideoModalOpen(true)}>
-                  <img src={study.img} alt={study.title} className="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition duration-500" />
+                  <Image src={study.img} alt={study.title} fill className="object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition duration-500" />
                   <div className="absolute inset-0 bg-[#002542]/20 group-hover:bg-transparent transition-colors"></div>
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.accent }}>
@@ -242,21 +246,21 @@ export default function NewCapeBrandBuilders() {
               <h3 className="text-3xl font-black text-white mb-3">Want numbers like these in your market?</h3>
               <p className="text-slate-300 font-medium text-lg">Book your Brand Strategy Call and we’ll map out your video‑funnel blueprint.</p>
             </div>
-            <a
+            <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="text-white px-10 py-5 rounded-full font-black text-lg transition w-full md:w-auto text-center flex-shrink-0 hover:-translate-y-1 active:scale-95 uppercase shadow-xl"
+              className="text-white px-10 py-5 rounded-full font-black text-lg transition w-full md:w-auto text-center shrink-0 hover:-translate-y-1 active:scale-95 uppercase shadow-xl"
               style={{ backgroundColor: colors.accent }}
             >
               Book Your Brand Strategy Call
-            </a>
+            </Link>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             {caseStudies.slice(3, 5).map((study, idx) => (
               <div key={idx} className="group flex flex-col bg-slate-50 rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition duration-300">
                 <div className="relative aspect-video bg-black overflow-hidden cursor-pointer" onClick={() => setIsVideoModalOpen(true)}>
-                  <img src={study.img} alt={study.title} className="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition duration-500" />
+                  <Image src={study.img} alt={study.title} fill className="object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition duration-500" />
                   <div className="absolute inset-0 bg-[#002542]/20 group-hover:bg-transparent transition-colors"></div>
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.accent }}>
@@ -292,7 +296,7 @@ export default function NewCapeBrandBuilders() {
 
           {/* Highlight Reel Moved from Hero */}
           <div className="relative w-full max-w-4xl mx-auto aspect-video bg-black rounded-2xl shadow-2xl overflow-hidden mb-16 group cursor-pointer border border-slate-200" onClick={() => setIsVideoModalOpen(true)}>
-             <img src="https://newcapepictures.com/wp-content/uploads/2025/12/spectrum-case-studt-hero-1024x572.jpg" alt="Highlight Reel Thumbnail" className="w-full h-full object-cover opacity-70 group-hover:scale-105 transition duration-500" />
+             <Image src="https://newcapepictures.com/wp-content/uploads/2025/12/spectrum-case-studt-hero-1024x572.jpg" alt="Highlight Reel Thumbnail" fill className="object-cover opacity-70 group-hover:scale-105 transition duration-500" />
              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.yellow }}>
                   <Play className="w-8 h-8 text-black fill-black ml-1" />
@@ -309,7 +313,7 @@ export default function NewCapeBrandBuilders() {
               { title: "Step 5 — Paid Traffic + Retargeting (Fuel the System)", desc: "Ads become wildly profitable when they drive traffic to a brand that actually converts." }
             ].map((step, idx) => (
               <div key={idx} className="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row gap-6 md:items-center hover:shadow-md transition duration-300 group">
-                <div className="w-16 h-16 rounded-xl flex-shrink-0 flex items-center justify-center font-black text-3xl shadow-inner group-hover:scale-105 transition transform text-white" style={{ backgroundColor: colors.primary }}>
+                <div className="w-16 h-16 rounded-xl shrink-0 flex items-center justify-center font-black text-3xl shadow-inner group-hover:scale-105 transition transform text-white" style={{ backgroundColor: colors.primary }}>
                   {idx + 1}
                 </div>
                 <div>
@@ -325,14 +329,14 @@ export default function NewCapeBrandBuilders() {
           </div>
 
           <div className="flex justify-center">
-            <a
+            <Link
               href="#cta-section"
               onClick={scrollToCTA}
               className="text-white px-12 py-5 rounded-full font-black text-xl transition-all shadow-xl hover:-translate-y-1 active:scale-95 flex items-center gap-3 uppercase"
               style={{ backgroundColor: colors.accent }}
             >
               Book Your Brand Strategy Call <ArrowRight className="w-6 h-6" />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -368,8 +372,8 @@ export default function NewCapeBrandBuilders() {
               "/Christine_Thares_review.png",
               "/John_Stahl_review.png"
             ].map((src, idx) => (
-              <div key={idx} className="w-[380px] md:w-[500px] lg:w-[650px] flex-shrink-0 rounded-2xl overflow-hidden shadow-2xl transform transition duration-500 hover:scale-[1.02] hover:-rotate-1 cursor-pointer bg-white">
-                <img src={src} alt="Google Review Screenshot" className="w-full h-auto object-cover" />
+              <div key={idx} className="w-[380px] md:w-[500px] lg:w-[650px] shrink-0 rounded-2xl overflow-hidden shadow-2xl transform transition duration-500 hover:scale-[1.02] hover:-rotate-1 cursor-pointer bg-white relative aspect-4/3">
+                <Image src={src} alt="Google Review Screenshot" fill className="object-cover" />
               </div>
             ))}
           </div>
@@ -405,25 +409,25 @@ export default function NewCapeBrandBuilders() {
               <h3 className="text-2xl font-black text-slate-400 mb-8 uppercase tracking-widest border-b border-slate-100 pb-6">What Most Video Vendors Deliver</h3>
               <ul className="space-y-6 flex-1 text-lg font-bold text-slate-600">
                 <li className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="text-slate-400 font-black">X</span>
                   </div>
                   A polished video with no real conversion plan
                 </li>
                 <li className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="text-slate-400 font-black">X</span>
                   </div>
                   Content disconnected from your sales process
                 </li>
                 <li className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="text-slate-400 font-black">X</span>
                   </div>
                   Messaging that doesn’t separate you from competitors
                 </li>
                 <li className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="text-slate-400 font-black">X</span>
                   </div>
                   Traffic coming in without enough trust to book
@@ -437,19 +441,19 @@ export default function NewCapeBrandBuilders() {
               <h3 className="text-2xl font-black text-white mb-8 border-b border-white/10 pb-6 leading-snug">What You Get With The Constructive Video-Funnel Blueprint™</h3>
               <ul className="space-y-6 flex-1 text-lg font-bold text-slate-200">
                 <li className="flex items-start gap-4">
-                  <CheckCircle className="w-8 h-8 text-[#f1b40c] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-8 h-8 text-[#f1b40c] shrink-0 mt-0.5" />
                   <span className="text-white">A system built to convert the traffic you already get</span>
                 </li>
                 <li className="flex items-start gap-4">
-                  <CheckCircle className="w-8 h-8 text-[#f1b40c] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-8 h-8 text-[#f1b40c] shrink-0 mt-0.5" />
                   <span className="text-white">Brand film, case studies, and trust content that work together</span>
                 </li>
                 <li className="flex items-start gap-4">
-                  <CheckCircle className="w-8 h-8 text-[#f1b40c] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-8 h-8 text-[#f1b40c] shrink-0 mt-0.5" />
                   <span className="text-white">Messaging that helps homeowners choose you before they get another quote</span>
                 </li>
                 <li className="flex items-start gap-4">
-                  <CheckCircle className="w-8 h-8 text-[#f1b40c] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-8 h-8 text-[#f1b40c] shrink-0 mt-0.5" />
                   <span className="text-white">A rollout strategy designed to improve booked estimates and close rate over time</span>
                 </li>
               </ul>
@@ -493,7 +497,7 @@ export default function NewCapeBrandBuilders() {
               </div>
               <h3 className="font-black text-2xl text-[#002542] mb-3 ml-2 mt-2">Ironclad Performance Guarantee</h3>
               <p className="text-slate-600 text-xl font-medium leading-relaxed italic ml-2">
-                "If we don’t create a measurable lift in qualified leads or close rate within 6 months, we’ll keep working for free until we do."
+                &ldquo;If we don’t create a measurable lift in qualified leads or close rate within 6 months, we’ll keep working for free until we do.&rdquo;
               </p>
             </div>
           </div>
@@ -508,14 +512,14 @@ export default function NewCapeBrandBuilders() {
       {/* Footer */}
       <footer className="py-12 bg-slate-900 border-t border-slate-800 text-center">
         <div className="mb-6 flex justify-center">
-          <img src="/gregory-standal-sig-logo-white.svg" alt="Greg Standal" className="h-12 opacity-80" />
+          <Image src="/gregory-standal-sig-logo-white.svg" alt="Greg Standal" width={216} height={48} className="h-12 w-auto opacity-80" />
         </div>
         <p className="font-medium text-slate-500 text-sm">© {new Date().getFullYear()} New Cape Pictures. All rights reserved.</p>
       </footer>
 
       {/* Basic Video Modal representation */}
       {isVideoModalOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex justify-center items-center p-4">
+        <div className="fixed inset-0 z-100 bg-black/90 backdrop-blur-sm flex justify-center items-center p-4">
             <div className="w-full max-w-5xl bg-black rounded-2xl overflow-hidden relative shadow-2xl border border-white/10">
                 <button onClick={() => setIsVideoModalOpen(false)} className="absolute top-4 right-4 text-white z-10 w-12 h-12 bg-white/10 flex items-center justify-center rounded-full hover:bg-white/20 transition font-bold text-xl">
                     ✕

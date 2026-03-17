@@ -9,10 +9,7 @@ import {
   CheckCircle2,
   AlertTriangle,
   BarChart3,
-  XCircle,
   FileMinus,
-  Check,
-  AlertCircle
 } from "lucide-react";
 
 export default function WireframePage() {
@@ -80,7 +77,7 @@ export default function WireframePage() {
             </div>
           </div>
           <div className="relative">
-            <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border border-gray-100">
+            <div className="aspect-4/3 rounded-xl overflow-hidden shadow-2xl border border-gray-100">
               {placeholderImg("[Hero Dashboard Image Placeholder]")}
             </div>
           </div>
@@ -104,7 +101,7 @@ export default function WireframePage() {
               <div key={i} className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
+                    <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-gray-200">
                       {placeholderImg("[]")}
                     </div>
                     <span className="font-bold text-sm">[Name Placeholder]</span>
@@ -113,10 +110,10 @@ export default function WireframePage() {
                     {[...Array(5)].map((_, j) => <Star key={j} size={12} fill="currentColor" />)}
                   </div>
                 </div>
-                <p className="text-sm text-gray-600 italic mb-6 flex-grow leading-relaxed">
+                <p className="text-sm text-gray-600 italic mb-6 grow leading-relaxed">
                   &quot;[Testimonial quote placeholder text describing their specific problem and how the service solved it for them.]&quot;
                 </p>
-                <div className="aspect-[16/9] rounded-lg overflow-hidden border border-gray-100 bg-gray-100">
+                <div className="aspect-video rounded-lg overflow-hidden border border-gray-100 bg-gray-100">
                   {placeholderVideo(`[Video ${i} Placeholder]`)}
                 </div>
               </div>
@@ -178,7 +175,7 @@ export default function WireframePage() {
               <ul className="space-y-4">
                 {[1, 2, 3, 4].map(i => (
                   <li key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />
                     <span className="text-sm text-gray-600">[Positive item placeholder text]</span>
                   </li>
                 ))}
@@ -193,7 +190,7 @@ export default function WireframePage() {
               <ul className="space-y-4">
                 {[1, 2, 3, 4].map(i => (
                   <li key={i} className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-orange-500 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-orange-500 shrink-0" />
                     <span className="text-sm text-gray-600">[Negative item placeholder text]</span>
                   </li>
                 ))}
@@ -256,7 +253,7 @@ export default function WireframePage() {
           <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 mb-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="flex flex-col">
-                <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-black mb-6">
+                <div className="aspect-video rounded-2xl overflow-hidden bg-black mb-6">
                    {placeholderVideo("[Main Video Placeholder]")}
                 </div>
                 <div className="flex items-center justify-center lg:justify-start gap-4">
@@ -282,7 +279,7 @@ export default function WireframePage() {
                   <ul className="space-y-3">
                     {[1, 2, 3].map(j => (
                       <li key={j} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                         <span className="text-sm text-gray-600">[Result bullet point placeholder]</span>
                       </li>
                     ))}
@@ -307,7 +304,7 @@ export default function WireframePage() {
                   <ul className="space-y-3">
                     {[1, 2, 3, 4].map(j => (
                       <li key={j} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                         <span className="text-sm text-gray-600">[Result bullet point placeholder]</span>
                       </li>
                     ))}
@@ -315,7 +312,7 @@ export default function WireframePage() {
                 </div>
               </div>
               <div className="flex flex-col order-1 lg:order-2">
-                <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-black mb-6">
+                <div className="aspect-video rounded-2xl overflow-hidden bg-black mb-6">
                    {placeholderVideo("[Video Placeholder]")}
                 </div>
                 <div className="flex items-center justify-center lg:justify-start gap-4">
@@ -335,7 +332,7 @@ export default function WireframePage() {
           <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="flex flex-col">
-                <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-black mb-6">
+                <div className="aspect-video rounded-2xl overflow-hidden bg-black mb-6">
                    {placeholderVideo("[Video Placeholder]")}
                 </div>
                 <div className="flex items-center justify-center lg:justify-start gap-4">
@@ -361,7 +358,7 @@ export default function WireframePage() {
                   <ul className="space-y-3">
                     {[1, 2, 3, 4].map(j => (
                       <li key={j} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
                         <span className="text-sm text-gray-600">[Result bullet point placeholder]</span>
                       </li>
                     ))}
@@ -388,7 +385,7 @@ export default function WireframePage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1 flex justify-center">
-              <div className="w-full max-w-sm aspect-[1/2] rounded-3xl overflow-hidden">
+              <div className="w-full max-w-sm aspect-1/2 rounded-3xl overflow-hidden">
                  {placeholderImg("[Process Infographic Image Placeholder]")}
               </div>
             </div>
@@ -401,7 +398,7 @@ export default function WireframePage() {
                 { step: "5", title: "[Step 5 Title Placeholder]", desc: "[Description of the final phase and success state.]", icon: true }
               ].map((item, i) => (
                 <div key={i} className="flex gap-6 items-start">
-                  <div className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-blue-800 bg-blue-100">
+                  <div className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center font-bold text-blue-800 bg-blue-100">
                     {item.step}
                   </div>
                   <div>

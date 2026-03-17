@@ -207,7 +207,7 @@ export default function FunnelAuditPage() {
             <div className="space-y-3 mb-8">
               <div className="flex items-center gap-3">
                 <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                  className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
                   style={{ backgroundColor: colors.primary }}
                 >
                   <Check className="w-4 h-4 text-white" />
@@ -216,7 +216,7 @@ export default function FunnelAuditPage() {
               </div>
               <div className="flex items-center gap-3">
                 <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                  className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
                   style={{ backgroundColor: colors.primary }}
                 >
                   <Check className="w-4 h-4 text-white" />
@@ -225,7 +225,7 @@ export default function FunnelAuditPage() {
               </div>
               <div className="flex items-center gap-3">
                 <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                  className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
                   style={{ backgroundColor: colors.primary }}
                 >
                   <Check className="w-4 h-4 text-white" />
@@ -391,7 +391,7 @@ export default function FunnelAuditPage() {
             ].map((item, idx) => (
               <div key={idx} className="flex items-center gap-3 p-4 bg-white/10 rounded-xl">
                 <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                  className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
                   style={{ backgroundColor: colors.accent }}
                 >
                   <Check className="w-4 h-4 text-white" />

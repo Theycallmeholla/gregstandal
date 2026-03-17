@@ -62,7 +62,7 @@ export default function ThankYouPage() {
                        key={idx}
                        src={logo.src}
                        alt={logo.alt}
-                       className="h-8 md:h-12 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 flex-shrink-0"
+                       className="h-8 md:h-12 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 shrink-0"
                      />
                    ))}
                  </div>
@@ -83,7 +83,7 @@ export default function ThankYouPage() {
                   "How to increase qualified booked estimates"
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-4">
-                    <CheckCircle2 className="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-6 h-6 text-green-500 shrink-0 mt-0.5" />
                     <span className="text-xl font-bold text-slate-700">{item}</span>
                   </li>
                 ))}
