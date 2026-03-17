@@ -381,9 +381,19 @@ export default function App() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map((src, idx) => (
-              <div key={idx} className="overflow-hidden rounded-2xl bg-slate-50 shadow-sm ring-1 ring-slate-200">
-                <img src={src} alt="Client Review" className="w-full h-auto" />
+            {testimonials.map((testimonial, idx) => (
+              <div key={idx} className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
+                <Quote className="mb-6 text-indigo-600" size={32} />
+                <p className="text-slate-700 leading-relaxed mb-6">&quot;{testimonial.quote}&quot;</p>
+                <div className="flex items-center gap-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">
+                    {testimonial.avatar}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900">{testimonial.name}</p>
+                    <p className="text-sm text-slate-600">{testimonial.role}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

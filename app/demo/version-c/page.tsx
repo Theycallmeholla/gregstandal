@@ -1,6 +1,9 @@
 "use client";
+
 import React, { useState } from 'react';
-import { PlayCircle, Play, CheckCircle, ArrowRight, ShieldCheck, Star, Calendar, Zap, Check } from 'lucide-react';
+import Image from "next/image";
+import Link from "next/link";
+import { Play, CheckCircle, ArrowRight, ShieldCheck, Star, Calendar, Zap, Check } from 'lucide-react';
 
 const colors = {
   primary: '#002542',
@@ -56,7 +59,7 @@ export default function VersionCLandingPage() {
       {/* Stripped Nav - Very minimal */}
       <header className="absolute top-0 w-full z-50 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-center md:justify-start">
-          <img src="/gregory-standal-sig-logo-blue.svg" alt="Gregory Standal" className="h-8 md:h-10 opacity-90" />
+          <Image src="/gregory-standal-sig-logo-blue.svg" alt="Gregory Standal" width={160} height={40} className="h-8 md:h-10 opacity-90 w-auto" />
         </div>
       </header>
 
@@ -93,7 +96,7 @@ export default function VersionCLandingPage() {
               </ul>
 
               <div className="flex flex-col items-center lg:items-start">
-                <a
+                <Link
                   href="#cta-section"
                   onClick={scrollToCTA}
                   className="group text-white px-10 py-5 rounded-2xl font-black text-xl transition-all shadow-xl hover:-translate-y-1 active:scale-95 flex items-center gap-3 w-full sm:w-auto justify-center"
@@ -101,7 +104,7 @@ export default function VersionCLandingPage() {
                 >
                   Book Your Free Brand Strategy Call
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
                 <p className="text-sm font-bold text-slate-500 mt-4 text-center lg:text-left">
                   20 minute call to map your Video Funnel Plan. No cost. No obligation.
                 </p>
@@ -114,10 +117,11 @@ export default function VersionCLandingPage() {
                 className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-4 border-white cursor-pointer group"
                 onClick={() => setIsVideoModalOpen(true)}
               >
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1541888081638-3475cd1db9ec?auto=format&fit=crop&q=80&w=1200" 
                   alt="Constructive Video Funnel" 
-                  className="w-full h-full object-cover opacity-70 group-hover:opacity-60 transition duration-500" 
+                  fill
+                  className="object-cover opacity-70 group-hover:opacity-60 transition duration-500" 
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <div className="w-20 h-20 rounded-full bg-[#F70118] flex items-center justify-center shadow-[0_0_30px_rgba(247,1,24,0.5)] group-hover:scale-110 transition duration-300 mb-4">
@@ -129,14 +133,14 @@ export default function VersionCLandingPage() {
 
               {/* Duplicate CTA under VSL for mobile only */}
               <div className="mt-6 flex flex-col items-center lg:hidden">
-                <a
+                <Link
                   href="#cta-section"
                   onClick={scrollToCTA}
                   className="text-white px-8 py-4 rounded-xl font-bold text-lg transition shadow-md w-full text-center"
                   style={{ backgroundColor: colors.accent }}
                 >
                   Book Your Free Brand Strategy Call
-                </a>
+                </Link>
                 <p className="text-xs font-bold text-slate-500 mt-2 text-center">
                   20 minute call to map your Video Funnel Plan. No cost. No obligation.
                 </p>
@@ -154,12 +158,14 @@ export default function VersionCLandingPage() {
           </p>
           <div className="flex justify-center gap-12 items-center opacity-60">
             {homeServiceLogos.map((logo, idx) => (
-              <img
-                key={idx}
-                src={logo.src}
-                alt={logo.alt}
-                className="h-8 md:h-12 w-auto object-contain grayscale"
-              />
+              <div key={idx} className="relative h-8 md:h-12 w-32 shrink-0 grayscale">
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  fill
+                  className="object-contain"
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -223,8 +229,8 @@ export default function VersionCLandingPage() {
               <div className="grid sm:grid-cols-3 gap-6">
                 {caseStudies.map((study, idx) => (
                   <div key={idx} className="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden flex flex-col hover:shadow-lg transition group">
-                    <div className="aspect-[4/3] bg-slate-200 relative overflow-hidden">
-                       <img src={study.img} alt={study.title} className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition duration-500" />
+                    <div className="relative aspect-4/3 bg-slate-200 overflow-hidden">
+                       <Image src={study.img} alt={study.title} fill className="object-cover opacity-90 group-hover:scale-105 transition duration-500" />
                     </div>
                     <div className="p-5 flex-1 flex flex-col text-center">
                       <h4 className="font-bold text-[#002542] mb-3 text-sm">{study.title}</h4>
@@ -240,13 +246,14 @@ export default function VersionCLandingPage() {
             {/* Right: Highlight Reel & 9:16 Pattern Interrupt (Optional) */}
             <div className="lg:col-span-5 relative">
               <div 
-                className="relative aspect-[9/16] bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-[6px] border-slate-100 cursor-pointer group max-w-[360px] mx-auto lg:max-w-none lg:w-full"
+                className="relative aspect-9/16 bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-[6px] border-slate-100 cursor-pointer group max-w-[360px] mx-auto lg:max-w-none lg:w-full"
                 onClick={() => setIsVideoModalOpen(true)}
               >
-                <img 
+                <Image 
                   src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=600&auto=format&fit=crop&q=80" 
                   alt="Highlight Reel" 
-                  className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition duration-500" 
+                  fill
+                  className="object-cover opacity-80 group-hover:opacity-60 transition duration-500" 
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center mb-3 group-hover:scale-110 transition border border-white/50">
@@ -388,21 +395,21 @@ export default function VersionCLandingPage() {
               <div className="space-y-4 divide-y divide-slate-100">
                 <div className="pt-3 first:pt-0">
                   <p className="text-sm text-slate-600 italic leading-relaxed">
-                    "The new videos immediately made us feel more established and gave prospects far more confidence."
+                    &quot;The new videos immediately made us feel more established and gave prospects far more confidence.&quot;
                   </p>
-                  <p className="text-xs font-bold text-[#002542] mt-2">— AG Williams Painting</p>
+                  <p className="text-xs font-bold text-[#002542] mt-2">&mdash; AG Williams Painting</p>
                 </div>
                 <div className="pt-3">
                   <p className="text-sm text-slate-600 italic leading-relaxed">
-                    "Our close rate jumped by 20% in the first month implementing the trust-stack on our estimate page."
+                    &quot;Our close rate jumped by 20% in the first month implementing the trust-stack on our estimate page.&quot;
                   </p>
-                  <p className="text-xs font-bold text-[#002542] mt-2">— Spectrum Painting</p>
+                  <p className="text-xs font-bold text-[#002542] mt-2">&mdash; Spectrum Painting</p>
                 </div>
                 <div className="pt-3">
                   <p className="text-sm text-slate-600 italic leading-relaxed">
-                    "If you run a home service business and aren't using this system, you're lighting money on fire every day."
+                    &quot;If you run a home service business and aren&apos;t using this system, you&apos;re lighting money on fire every day.&quot;
                   </p>
-                  <p className="text-xs font-bold text-[#002542] mt-2">— Bella Contracting</p>
+                  <p className="text-xs font-bold text-[#002542] mt-2">&mdash; Bella Contracting</p>
                 </div>
               </div>
             </div>
@@ -414,18 +421,18 @@ export default function VersionCLandingPage() {
       {/* Footer */}
       <footer className="py-12 bg-white border-t border-slate-200 text-center">
         <div className="mb-6 flex justify-center">
-          <img src="/gregory-standal-sig-logo-blue.svg" alt="Gregory Standal" className="h-6 opacity-50 grayscale" />
+          <Image src="/gregory-standal-sig-logo-blue.svg" alt="Gregory Standal" width={160} height={40} className="opacity-50 grayscale" />
         </div>
         <div className="flex justify-center gap-6 mb-4">
-          <a href="#" className="text-xs font-bold text-slate-400 hover:text-slate-600 transition uppercase tracking-wider">Privacy Policy</a>
-          <a href="#" className="text-xs font-bold text-slate-400 hover:text-slate-600 transition uppercase tracking-wider">Terms of Service</a>
+          <Link href="#" className="text-xs font-bold text-slate-400 hover:text-slate-600 transition uppercase tracking-wider">Privacy Policy</Link>
+          <Link href="#" className="text-xs font-bold text-slate-400 hover:text-slate-600 transition uppercase tracking-wider">Terms of Service</Link>
         </div>
         <p className="font-medium text-slate-400 text-xs">© {new Date().getFullYear()} gregorystandal.com. All rights reserved.</p>
       </footer>
 
       {/* Modal */}
       {isVideoModalOpen && (
-        <div className="fixed inset-0 z-[100] bg-slate-900/95 backdrop-blur-md flex justify-center items-center p-4" onClick={() => setIsVideoModalOpen(false)}>
+        <div className="fixed inset-0 z-100 bg-slate-900/95 backdrop-blur-md flex justify-center items-center p-4" onClick={() => setIsVideoModalOpen(false)}>
             <div className="w-full max-w-5xl bg-black rounded-2xl overflow-hidden relative shadow-2xl" onClick={e => e.stopPropagation()}>
                 <button onClick={() => setIsVideoModalOpen(false)} className="absolute top-4 right-4 text-white z-10 w-10 h-10 bg-white/10 flex items-center justify-center rounded-full hover:bg-white/20 transition">
                     ✕

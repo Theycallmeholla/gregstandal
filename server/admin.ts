@@ -24,10 +24,9 @@ export async function createAdminSessionToken(identity: AdminIdentity) {
   return signAdminSession({ sub: identity.adminUserId, email: identity.email, iat: now, exp }, secret);
 }
 
-export function getRequestOrigin() {
-  const h = headers();
+export async function getRequestOrigin() {
+  const h = await headers();
   const proto = h.get("x-forwarded-proto") ?? "http";
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
   return `${proto}://${host}`;
 }
-

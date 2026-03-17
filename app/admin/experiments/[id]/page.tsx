@@ -1,6 +1,7 @@
 import { TEMPLATE_REGISTRY } from "@/landing/templates/registry";
 import type { LandingTemplateKey } from "@/landing/templates/types";
 import { prisma } from "@/server/db";
+import type { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { notFound } from "next/navigation";
 import { z } from "zod";
@@ -169,7 +170,7 @@ async function promoteWinnerAction(formData: FormData) {
   const experimentId = String(formData.get("experimentId") ?? "");
   const winnerVariantId = String(formData.get("winnerVariantId") ?? "");
 
-  await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const variants = await tx.variant.findMany({ where: { experimentId } });
     if (variants.length === 0) return;
     for (const v of variants) {

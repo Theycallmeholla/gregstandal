@@ -1,6 +1,8 @@
 "use client";
-import React from 'react';
-import { CheckCircle2, Clock, Calendar, ShieldCheck, Mail, Play } from 'lucide-react';
+
+import React, { useState } from "react";
+import Image from "next/image";
+import { CheckCircle2, Clock, ShieldCheck, Mail, Play } from 'lucide-react';
 
 const colors = {
   primary: '#002542',
@@ -19,7 +21,7 @@ const clientLogos = [
 ];
 
 export default function ThankYouPage() {
-  const [isVideoModalOpen, setIsVideoModalOpen] = React.useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   return (
     <div className="bg-slate-50 text-slate-900 antialiased font-sans selection:bg-[#F70118]/20 min-h-screen flex flex-col">
@@ -27,7 +29,7 @@ export default function ThankYouPage() {
       {/* Header */}
       <header className="w-full z-50 bg-white border-b border-slate-200 py-4 fixed top-0 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-center md:justify-start">
-          <img src="/gregory-standal-sig-logo-blue.svg" alt="Greg Standal" className="h-10 cursor-pointer hover:opacity-80 transition" />
+          <Image src="/gregory-standal-sig-logo-blue.svg" alt="Greg Standal" width={160} height={40} className="cursor-pointer hover:opacity-80 transition" />
         </div>
       </header>
 
@@ -58,12 +60,14 @@ export default function ThankYouPage() {
                <div className="relative overflow-hidden mask-image-edges">
                  <div className="flex animate-scroll gap-12 items-center">
                    {[...clientLogos, ...clientLogos].map((logo, idx) => (
-                     <img
-                       key={idx}
-                       src={logo.src}
-                       alt={logo.alt}
-                       className="h-8 md:h-12 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 shrink-0"
-                     />
+                     <div key={idx} className="relative h-8 md:h-12 w-32 shrink-0 grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100">
+                       <Image
+                         src={logo.src}
+                         alt={logo.alt}
+                         fill
+                         className="object-contain"
+                       />
+                     </div>
                    ))}
                  </div>
                </div>
@@ -118,7 +122,7 @@ export default function ThankYouPage() {
             {/* Case Study Block */}
             <div className="group flex flex-col bg-slate-50 rounded-3xl overflow-hidden shadow-xl border border-slate-200 hover:shadow-2xl transition duration-300">
               <div className="relative aspect-video bg-black overflow-hidden cursor-pointer" onClick={() => setIsVideoModalOpen(true)}>
-                <img src="https://newcapepictures.com/wp-content/uploads/2021/11/bella-contracting.jpg" alt="Case Study" className="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition duration-500" />
+                <Image src="https://newcapepictures.com/wp-content/uploads/2021/11/bella-contracting.jpg" alt="Case Study" fill className="object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition duration-500" />
                 <div className="absolute inset-0 bg-[#002542]/20 group-hover:bg-transparent transition-colors"></div>
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.accent }}>
@@ -141,7 +145,7 @@ export default function ThankYouPage() {
       {/* Footer */}
       <footer className="py-12 bg-slate-900 border-t border-slate-800 text-center text-white">
         <div className="mb-6 flex justify-center">
-          <img src="/gregory-standal-sig-logo-white.svg" alt="Greg Standal" className="h-12 opacity-80" />
+          <Image src="/gregory-standal-sig-logo-white.svg" alt="Greg Standal" width={192} height={48} className="opacity-80" />
         </div>
         <p className="font-medium text-slate-500 text-sm mb-4">© {new Date().getFullYear()} Greg Standal. All rights reserved.</p>
         <div className="flex justify-center gap-6">
@@ -152,7 +156,7 @@ export default function ThankYouPage() {
 
       {/* Video Modal representation */}
       {isVideoModalOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex justify-center items-center p-4">
+        <div className="fixed inset-0 z-100 bg-black/90 backdrop-blur-sm flex justify-center items-center p-4">
             <div className="w-full max-w-5xl bg-black rounded-2xl overflow-hidden relative shadow-2xl border border-white/10">
                 <button onClick={() => setIsVideoModalOpen(false)} className="absolute top-4 right-4 text-white z-10 w-12 h-12 bg-white/10 flex items-center justify-center rounded-full hover:bg-white/20 transition font-bold text-xl">
                     ✕

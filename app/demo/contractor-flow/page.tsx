@@ -217,9 +217,17 @@ const App = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((src, idx) => (
-              <div key={idx} className="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <img src={src} alt="Client Review" className="w-full h-auto" />
+            {testimonials.map((testimonial, idx) => (
+              <div key={idx} className="bg-slate-50 border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                <Quote className="w-10 h-10 text-red-600 mb-6" />
+                <p className="text-slate-700 leading-relaxed text-lg mb-6">
+                  &quot;{testimonial.quote}&quot;
+                </p>
+                <div className="space-y-1">
+                  <p className="font-bold text-slate-900">{testimonial.name}</p>
+                  <p className="text-sm text-slate-600">{testimonial.company}</p>
+                  <p className="text-sm font-semibold text-red-600">{testimonial.stat}</p>
+                </div>
               </div>
             ))}
           </div>

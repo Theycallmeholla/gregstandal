@@ -39,6 +39,15 @@ const stats = [
   { value: "30 Days", label: "Launch Timeline" },
 ];
 
+const reviewScreenshots = [
+  { src: "/Irwin_Stromeyer_review.png", width: 1304, height: 628 },
+  { src: "/Joe_Abela_review.png", width: 1304, height: 348 },
+  { src: "/Thomas_Miller_review.png", width: 1304, height: 588 },
+  { src: "/Natalie_M_review.png", width: 1304, height: 508 },
+  { src: "/Christine_Thares_review.png", width: 1304, height: 348 },
+  { src: "/John_Stahl_review.png", width: 1304, height: 428 },
+];
+
 const caseStudies = [
   {
     title: "How AG Williams Painting Generates $28k+ Months (15x ROI)",
@@ -358,22 +367,15 @@ export default function NewCapeBrandBuilders() {
         <div className="w-full relative py-8 mb-16">
           <div className="absolute inset-0 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #002542 0%, transparent 10%, transparent 90%, #002542 100%)' }}></div>
           <div className="flex animate-scroll-reviews gap-8 items-center w-max px-8">
-            {[
-              "/Irwin_Stromeyer_review.png",
-              "/Joe_Abela_review.png",
-              "/Thomas_Miller_review.png",
-              "/Natalie_M_review.png",
-              "/Christine_Thares_review.png",
-              "/John_Stahl_review.png",
-              "/Irwin_Stromeyer_review.png",
-              "/Joe_Abela_review.png",
-              "/Thomas_Miller_review.png",
-              "/Natalie_M_review.png",
-              "/Christine_Thares_review.png",
-              "/John_Stahl_review.png"
-            ].map((src, idx) => (
-              <div key={idx} className="w-[380px] md:w-[500px] lg:w-[650px] shrink-0 rounded-2xl overflow-hidden shadow-2xl transform transition duration-500 hover:scale-[1.02] hover:-rotate-1 cursor-pointer bg-white relative aspect-4/3">
-                <Image src={src} alt="Google Review Screenshot" fill className="object-cover" />
+            {[...reviewScreenshots, ...reviewScreenshots].map((review, idx) => (
+              <div key={`${review.src}-${idx}`} className="shrink-0 rounded-2xl overflow-hidden shadow-2xl transform transition duration-500 hover:scale-[1.02] hover:-rotate-1 cursor-pointer bg-white">
+                <Image
+                  src={review.src}
+                  alt="Google Review Screenshot"
+                  width={review.width}
+                  height={review.height}
+                  className="h-auto w-[380px] md:w-[500px] lg:w-[650px]"
+                />
               </div>
             ))}
           </div>
@@ -555,5 +557,4 @@ export default function NewCapeBrandBuilders() {
     </div>
   );
 }
-
 

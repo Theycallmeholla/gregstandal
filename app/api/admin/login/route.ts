@@ -9,7 +9,7 @@ function redirectTo(origin: string, path: string) {
 }
 
 export async function POST(req: Request) {
-  const origin = getRequestOrigin();
+  const origin = await getRequestOrigin();
 
   const adminEmail = (process.env.ADMIN_EMAIL ?? "").trim().toLowerCase();
   const adminPassword = process.env.ADMIN_PASSWORD ?? "";
@@ -52,4 +52,3 @@ export async function POST(req: Request) {
   });
   return res;
 }
-

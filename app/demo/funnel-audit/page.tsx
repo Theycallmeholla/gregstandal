@@ -1,6 +1,8 @@
 "use client";
+
 import React, { useState, useRef, useEffect } from 'react';
-import { Play, Check, Star, ChevronDown, ArrowRight, X, Pause } from 'lucide-react';
+import Image from "next/image";
+import { Play, Check, Star, ChevronDown, ArrowRight, X } from 'lucide-react';
 
 const colors = {
   primary: '#002542',
@@ -92,7 +94,7 @@ function HLSVideo({
         onEnded={() => setIsPlaying(false)}
       />
       {!isPlaying && (
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-center justify-center cursor-pointer">
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent flex items-center justify-center cursor-pointer">
           <div
             className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
             style={{ backgroundColor: colors.accent }}
@@ -131,7 +133,7 @@ function VideoModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={onClose} />
       <div className="relative w-full max-w-5xl z-10">
         <button
@@ -169,7 +171,7 @@ export default function FunnelAuditPage() {
       {/* Minimal Header */}
       <header className="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-6 h-16 flex justify-between items-center">
-          <img src="/gregory-standal-sig-logo-blue.svg" alt="Gregory Standal" className="h-8 md:h-10" />
+          <Image src="/gregory-standal-sig-logo-blue.svg" alt="Gregory Standal" width={160} height={40} />
           <button
             onClick={scrollToForm}
             className="text-white font-bold text-sm px-6 py-2.5 rounded-full transition hover:opacity-90"
@@ -255,12 +257,13 @@ export default function FunnelAuditPage() {
               style={{ border: `3px solid ${colors.primary}20` }}
               onClick={() => setVslModalOpen(true)}
             >
-              <img
-                src="/greg-video-thumbnail.png"
+              <Image
+                src="/g-video-thumbnail.png"
                 alt="VSL Video"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-center justify-center group-hover:from-black/50 transition">
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent flex items-center justify-center group-hover:from-black/50 transition">
                 <div
                   className="w-20 h-20 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform"
                   style={{ backgroundColor: colors.accent }}
@@ -294,7 +297,7 @@ export default function FunnelAuditPage() {
           {/* Google Reviews */}
           <div className="flex items-center justify-center gap-6 mb-8">
             <div className="flex items-center gap-2">
-              <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_92x30dp.png" alt="Google" className="h-6" />
+              <Image src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_92x30dp.png" alt="Google" width={92} height={30} className="h-6 w-auto" />
               <span className="font-bold text-slate-700">Reviews</span>
             </div>
             <div className="flex" style={{ color: colors.accent }}>
@@ -314,8 +317,8 @@ export default function FunnelAuditPage() {
               "/John_Stahl_review.png",
               "/Thomas_Miller_review.png",
             ].map((src, idx) => (
-              <div key={idx} className="rounded-xl overflow-hidden shadow-lg border border-slate-200 bg-white">
-                <img src={src} alt="Client Review" className="w-full h-auto" />
+              <div key={idx} className="relative aspect-4/3 rounded-xl overflow-hidden shadow-lg border border-slate-200 bg-white">
+                <Image src={src} alt="Client Review" fill className="object-contain" />
               </div>
             ))}
           </div>
@@ -337,7 +340,7 @@ export default function FunnelAuditPage() {
             {testimonialData.map((testimonial, idx) => (
               <div
                 key={idx}
-                className="relative aspect-[9/16] rounded-xl overflow-hidden bg-slate-900 shadow-lg group cursor-pointer"
+                className="relative aspect-9/16 rounded-xl overflow-hidden bg-slate-900 shadow-lg group cursor-pointer"
                 onClick={() => setTestimonialModal(idx)}
               >
                 <HLSVideo
@@ -346,7 +349,7 @@ export default function FunnelAuditPage() {
                   controls={false}
                   muted
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 pointer-events-none">
+                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 pointer-events-none">
                   <div
                     className="w-10 h-10 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform"
                     style={{ backgroundColor: colors.accent }}
@@ -522,7 +525,7 @@ export default function FunnelAuditPage() {
               },
               {
                 q: "How is this different from a normal agency?",
-                a: "Most agencies sell traffic or content. We focus on the trust and conversion layer that turns attention into actual booked estimates. We don't just make things look pretty—we build assets that sell."
+                a: "Most agencies sell traffic or content. We focus on the trust and conversion layer that turns attention into actual booked estimates. We don&apos;t just make things look pretty—we build assets that sell."
               },
               {
                 q: "Do I need ads for this to work?",
@@ -530,7 +533,7 @@ export default function FunnelAuditPage() {
               },
               {
                 q: "What happens after I book?",
-                a: "We'll review your current funnel, identify where you're losing trust and leads, and show you a clear plan to fix it. If we're a fit, we'll discuss next steps."
+                a: "We&apos;ll review your current funnel, identify where you're losing trust and leads, and show you a clear plan to fix it. If we're a fit, we&apos;ll discuss next steps."
               },
             ].map((faq, idx) => (
               <div
@@ -578,7 +581,7 @@ export default function FunnelAuditPage() {
 
       {/* Simple Footer */}
       <footer className="py-8 bg-white border-t border-slate-200 text-center">
-        <img src="/gregory-standal-sig-logo-blue.svg" alt="Gregory Standal" className="h-8 mx-auto mb-4" />
+        <Image src="/gregory-standal-sig-logo-blue.svg" alt="Gregory Standal" width={160} height={40} className="mx-auto mb-4" />
         <p className="text-sm text-slate-500">
           © {new Date().getFullYear()} Gregory Standal. All rights reserved.
         </p>

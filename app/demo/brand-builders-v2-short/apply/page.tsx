@@ -1,15 +1,12 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   Play,
   CheckCircle,
   XCircle,
-  ArrowRight,
-  TrendingUp,
-  Video,
-  BarChart3,
-  CalendarDays
-} from 'lucide-react';
+} from "lucide-react";
 
 const colors = {
   primary: '#002542',
@@ -32,7 +29,7 @@ export default function ApplicationPage() {
       {/* Header */}
       <header className="w-full z-50 bg-white border-b border-slate-200 py-4 fixed top-0 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-center md:justify-start">
-          <img src="/gregory-standal-sig-logo-blue.svg" alt="Greg Standal" className="h-10 cursor-pointer hover:opacity-80 transition" />
+          <Image src="/gregory-standal-sig-logo-blue.svg" alt="Greg Standal" width={160} height={40} className="cursor-pointer hover:opacity-80 transition" />
         </div>
       </header>
 
@@ -51,7 +48,7 @@ export default function ApplicationPage() {
           </p>
 
           <div className="relative w-full max-w-4xl mx-auto aspect-video bg-black rounded-2xl shadow-2xl overflow-hidden mb-10 group cursor-pointer border border-slate-200" onClick={() => setIsVideoModalOpen(true)}>
-             <img src="/greg-video-thumbnail.png" alt="4-minute breakdown" className="w-full h-full object-cover opacity-70 group-hover:scale-105 transition duration-500" />
+             <Image src="/g-video-thumbnail.png" alt="4-minute breakdown" fill className="object-cover opacity-70 group-hover:scale-105 transition duration-500" />
              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.yellow }}>
                   <Play className="w-8 h-8 text-black fill-black ml-1" />
@@ -60,14 +57,14 @@ export default function ApplicationPage() {
           </div>
 
           <div className="flex justify-center">
-            <a
+            <Link
               href="#apply-section"
               onClick={scrollToApply}
               className="group text-white px-10 py-5 rounded-full font-black text-xl md:text-2xl transition-all shadow-xl hover:-translate-y-1 active:scale-95 flex items-center gap-3 uppercase text-center"
               style={{ backgroundColor: colors.accent }}
             >
               Yes, I Want My Funnel Diagnostic
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -288,7 +285,7 @@ export default function ApplicationPage() {
       {/* Footer */}
       <footer className="py-12 bg-slate-900 border-t border-slate-800 text-center">
         <div className="mb-6 flex justify-center">
-          <img src="/gregory-standal-sig-logo-white.svg" alt="Greg Standal" className="h-12 opacity-80" />
+          <Image src="/gregory-standal-sig-logo-white.svg" alt="Greg Standal" width={192} height={48} className="opacity-80" />
         </div>
         <p className="font-medium text-slate-500 text-sm mb-4">© {new Date().getFullYear()} Greg Standal. All rights reserved.</p>
         <div className="flex justify-center gap-6">
@@ -299,7 +296,7 @@ export default function ApplicationPage() {
 
       {/* Video Modal representation */}
       {isVideoModalOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex justify-center items-center p-4">
+        <div className="fixed inset-0 z-100 bg-black/90 backdrop-blur-sm flex justify-center items-center p-4">
             <div className="w-full max-w-5xl bg-black rounded-2xl overflow-hidden relative shadow-2xl border border-white/10">
                 <button onClick={() => setIsVideoModalOpen(false)} className="absolute top-4 right-4 text-white z-10 w-12 h-12 bg-white/10 flex items-center justify-center rounded-full hover:bg-white/20 transition font-bold text-xl">
                     ✕
