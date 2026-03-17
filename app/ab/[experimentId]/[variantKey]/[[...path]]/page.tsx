@@ -4,6 +4,7 @@ import type { LandingTemplateKey, LandingTemplateRenderContext } from "@/landing
 import { prisma } from "@/server/db";
 import { cookies, headers } from "next/headers";
 import { notFound } from "next/navigation";
+import type { Variant } from "@/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -89,7 +90,7 @@ export default async function AbLandingPage({
   });
   if (!experiment || experiment.state !== "RUNNING" || experiment.routeId !== route.id) notFound();
 
-  const variant = experiment.variants.find((v) => v.key.toLowerCase() === variantKey.toLowerCase());
+  const variant = experiment.variants.find((v: Variant) => v.key.toLowerCase() === variantKey.toLowerCase());
   if (!variant) notFound();
 
   const templateKey: LandingTemplateKey = variant.templateKey as LandingTemplateKey;
