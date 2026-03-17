@@ -123,9 +123,18 @@ async function setStateAction(formData: FormData) {
 
   if (state === "RUNNING") {
     if (experiment.variants.length < 2) throw new Error("Need at least 2 variants to start.");
-    const total = experiment.variants.reduce((sum: number, v) => sum + v.weightPercent, 0);
+
+    const total = experiment.variants.reduce(
+      (sum: number, v: { weightPercent: number }) => sum + v.weightPercent,
+      0
+    );
+
     if (total !== 100) throw new Error("Variant weights must sum to 100 to start.");
-    const controlCount = experiment.variants.filter((v) => v.isControl).length;
+
+    const controlCount = experiment.variants.filter(
+      (v: { isControl: boolean }) => v.isControl
+    ).length;
+
     if (controlCount !== 1) throw new Error("Exactly one control variant is required.");
   }
 
@@ -171,6 +180,7 @@ async function promoteWinnerAction(formData: FormData) {
   await prisma.$transaction(async (tx) => {
     const variants = await tx.variant.findMany({ where: { experimentId } });
     if (variants.length === 0) return;
+
     for (const v of variants) {
       await tx.variant.update({
         where: { id: v.id },
@@ -344,7 +354,7 @@ export default async function ExperimentDetail({
               </tr>
             </thead>
             <tbody>
-              {experiment.variants.map((v) => {
+              {experiment.variants.map((v: { id: string; key: string; name: string }) => {
                 const s = statsByVariant.get(v.id) ?? {
                   page_view: 0,
                   cta_click: 0,
@@ -388,7 +398,17 @@ export default async function ExperimentDetail({
               </tr>
             </thead>
             <tbody>
-              {experiment.variants.map((v) => (
+              {experiment.variants.map((v: {
+                id: string;
+                key: string;
+                name: string;
+                weightPercent: number;
+                templateKey: string;
+                templateConfig: unknown;
+                redirectPath: string | null;
+                redirectUrl: string | null;
+                isControl: boolean;
+              }) => (
                 <tr key={v.id} className="border-b border-slate-100 align-top">
                   <td className="py-2 pr-4 font-mono text-xs">{v.key}</td>
                   <td className="py-2 pr-4">

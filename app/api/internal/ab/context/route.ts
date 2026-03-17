@@ -56,7 +56,14 @@ export async function GET(req: Request) {
       name: experiment.name,
       assignmentMode: experiment.assignmentMode,
       routingMode: experiment.routingMode,
-      variants: experiment.variants.map((v) => ({
+      variants: experiment.variants.map((v: {
+        id: string;
+        key: string;
+        name: string;
+        weightPercent: number;
+        redirectPath: string | null;
+        redirectUrl: string | null;
+      }) => ({
         id: v.id,
         key: v.key,
         name: v.name,
