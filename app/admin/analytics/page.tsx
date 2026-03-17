@@ -19,17 +19,20 @@ export default async function AnalyticsAdmin() {
     }),
   ]);
 
-  const byExperiment = new Map<
-    string,
-    { page_view: number; cta_click: number; lead_submit: number; conversion: number }
-  >();
+  type EventType = "page_view" | "cta_click" | "lead_submit" | "conversion";
+  const validTypes: EventType[] = ["page_view", "cta_click", "lead_submit", "conversion"];
+
+  const byExperiment = new Map<string, Record<EventType, number>>();
   for (const e of experiments) byExperiment.set(e.id, { page_view: 0, cta_click: 0, lead_submit: 0, conversion: 0 });
   for (const row of grouped) {
     const id = row.experimentId;
     if (!id) continue;
     const s = byExperiment.get(id);
     if (!s) continue;
-    s[row.type] = row._count._all;
+    const eventType = row.type as EventType;
+    if (validTypes.includes(eventType)) {
+      s[eventType] = row._count._all;
+    }
   }
 
   return (
