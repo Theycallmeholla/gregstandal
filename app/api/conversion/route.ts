@@ -1,5 +1,5 @@
 import { prisma } from "@/server/db";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { z } from "zod";

@@ -1,7 +1,7 @@
 import { TEMPLATE_REGISTRY } from "@/landing/templates/registry";
 import type { LandingTemplateKey } from "@/landing/templates/types";
 import { prisma } from "@/server/db";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 import { revalidatePath } from "next/cache";
 import { notFound } from "next/navigation";
 import { z } from "zod";
