@@ -123,7 +123,7 @@ async function setStateAction(formData: FormData) {
 
   if (state === "RUNNING") {
     if (experiment.variants.length < 2) throw new Error("Need at least 2 variants to start.");
-    const total = experiment.variants.reduce((sum, v) => sum + v.weightPercent, 0);
+    const total = experiment.variants.reduce((sum: number, v) => sum + v.weightPercent, 0);
     if (total !== 100) throw new Error("Variant weights must sum to 100 to start.");
     const controlCount = experiment.variants.filter((v) => v.isControl).length;
     if (controlCount !== 1) throw new Error("Exactly one control variant is required.");
