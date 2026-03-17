@@ -4,6 +4,7 @@ import { prisma } from "@/server/db";
 import { revalidatePath } from "next/cache";
 import { notFound } from "next/navigation";
 import { z } from "zod";
+import type { Variant } from "@/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -123,9 +124,9 @@ async function setStateAction(formData: FormData) {
 
   if (state === "RUNNING") {
     if (experiment.variants.length < 2) throw new Error("Need at least 2 variants to start.");
-    const total = experiment.variants.reduce((sum, v) => sum + v.weightPercent, 0);
+    const total = experiment.variants.reduce((sum: number, v: Variant) => sum + v.weightPercent, 0);
     if (total !== 100) throw new Error("Variant weights must sum to 100 to start.");
-    const controlCount = experiment.variants.filter((v) => v.isControl).length;
+    const controlCount = experiment.variants.filter((v: Variant) => v.isControl).length;
     if (controlCount !== 1) throw new Error("Exactly one control variant is required.");
   }
 
@@ -206,10 +207,10 @@ export default async function ExperimentDetail({ params }: { params: { id: strin
     _count: { _all: true },
   });
 
-  const statsByVariant = new Map<
-    string,
-    { page_view: number; cta_click: number; lead_submit: number; conversion: number }
-  >();
+  type EventType = "page_view" | "cta_click" | "lead_submit" | "conversion";
+  const validTypes: EventType[] = ["page_view", "cta_click", "lead_submit", "conversion"];
+
+  const statsByVariant = new Map<string, Record<EventType, number>>();
   for (const v of experiment.variants) {
     statsByVariant.set(v.id, { page_view: 0, cta_click: 0, lead_submit: 0, conversion: 0 });
   }
@@ -218,7 +219,10 @@ export default async function ExperimentDetail({ params }: { params: { id: strin
     if (!vid) continue;
     const s = statsByVariant.get(vid);
     if (!s) continue;
-    s[row.type] = row._count._all;
+    const eventType = row.type as EventType;
+    if (validTypes.includes(eventType)) {
+      s[eventType] = row._count._all;
+    }
   }
 
   return (
