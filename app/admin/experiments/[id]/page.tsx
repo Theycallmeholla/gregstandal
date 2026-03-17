@@ -1,11 +1,9 @@
 import { TEMPLATE_REGISTRY } from "@/landing/templates/registry";
 import type { LandingTemplateKey } from "@/landing/templates/types";
 import { prisma } from "@/server/db";
-import type { Prisma } from "@/generated/prisma/client";
 import { revalidatePath } from "next/cache";
 import { notFound } from "next/navigation";
 import { z } from "zod";
-import type { Variant } from "@/generated/prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -125,9 +123,9 @@ async function setStateAction(formData: FormData) {
 
   if (state === "RUNNING") {
     if (experiment.variants.length < 2) throw new Error("Need at least 2 variants to start.");
-    const total = experiment.variants.reduce((sum: number, v: Variant) => sum + v.weightPercent, 0);
+    const total = experiment.variants.reduce((sum, v) => sum + v.weightPercent, 0);
     if (total !== 100) throw new Error("Variant weights must sum to 100 to start.");
-    const controlCount = experiment.variants.filter((v: Variant) => v.isControl).length;
+    const controlCount = experiment.variants.filter((v) => v.isControl).length;
     if (controlCount !== 1) throw new Error("Exactly one control variant is required.");
   }
 
@@ -170,7 +168,7 @@ async function promoteWinnerAction(formData: FormData) {
   const experimentId = String(formData.get("experimentId") ?? "");
   const winnerVariantId = String(formData.get("winnerVariantId") ?? "");
 
-  await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+  await prisma.$transaction(async (tx) => {
     const variants = await tx.variant.findMany({ where: { experimentId } });
     if (variants.length === 0) return;
     for (const v of variants) {
@@ -184,9 +182,15 @@ async function promoteWinnerAction(formData: FormData) {
   revalidatePath(`/admin/experiments/${experimentId}`);
 }
 
-export default async function ExperimentDetail({ params }: { params: { id: string } }) {
+export default async function ExperimentDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
   const experiment = await prisma.experiment.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { route: true, variants: { orderBy: [{ key: "asc" }] } },
   });
   if (!experiment) notFound();
