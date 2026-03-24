@@ -524,15 +524,14 @@ export default function NewCapeBrandBuilders() {
           </div>
 
           {/* New Cape Pictures CRM Booking Form Embed */}
-          <div className="bg-white p-2 rounded-2xl shadow-xl relative border border-slate-200 h-[700px] overflow-hidden">
+          <div className="bg-white p-2 rounded-2xl shadow-xl relative border border-slate-200 min-h-[900px]">
              <iframe
                src="https://link.cursivecrm.com/widget/booking/tRgGOQiQsmjldJZwy3JE"
-               style={{ width: '100%', border: 'none', overflow: 'hidden', height: '100%' }}
-               scrolling="no"
+               style={{ width: '100%', border: 'none', minHeight: '880px' }}
                id="ghYJkHL5Fkodr2z79LN0_1774367714803"
                title="Booking Calendar"
              />
-             <Script src="https://link.cursivecrm.com/js/form_embed.js" strategy="lazyOnload" />
+             <Script src="https://link.cursivecrm.com/js/form_embed.js" strategy="afterInteractive" />
           </div>
         </div>
       </section>
