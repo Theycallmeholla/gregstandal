@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Script from 'next/script';
 import {
   PlayCircle,
   Play,
@@ -13,7 +14,7 @@ import {
 
 const colors = {
   primary: '#002542',
-  accent: '#F70118', // New Cape Pictures Red
+  accent: '#FF6B00', // Orange accent
   yellow: '#f1b40c', // New Cape Pictures Yellow
 };
 
@@ -75,7 +76,7 @@ const caseStudies = [
   },
   {
     title: "How PB Innovations Scaled Using Our Video Strategy (30x ROI)",
-    tag: "Remodeling",
+    tag: "Heavy Equipment",
     img: "https://newcapepictures.com/wp-content/uploads/2025/12/pb-innovations.jpg",
     videoId: "190"
   }
@@ -120,7 +121,7 @@ export default function NewCapeBrandBuilders() {
   };
 
   return (
-    <div className="bg-white text-slate-900 antialiased font-sans selection:bg-[#F70118]/20">
+    <div className="bg-white text-slate-900 antialiased font-sans selection:bg-[#FF6B00]/20">
       
       {/* 1. Header with New Cape Logo (Distractions removed for funnel focus) */}
       <header className="w-full z-50 bg-white border-b border-slate-200 py-4 fixed top-0 backdrop-blur-md">
@@ -134,8 +135,8 @@ export default function NewCapeBrandBuilders() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           
           {/* Header (Attention Avatar) */}
-          <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-sm md:text-base font-black tracking-wide uppercase mb-6 bg-white border-2" style={{ color: colors.accent, borderColor: colors.accent }}>
-            For Home Improvement & Home Service Contractors
+          <div className="inline-flex text-white px-10 py-5 rounded-full font-black text-xl md:text-2xl shadow-xl items-center gap-3 uppercase mb-6" style={{ backgroundColor: colors.accent }}>
+            Stop Wasting Money on Ads
           </div>
 
           {/* Headline (Outcome Promise) */}
@@ -145,7 +146,7 @@ export default function NewCapeBrandBuilders() {
 
           {/* Subheadline (Mechanism + De-risk) */}
           <p className="text-xl md:text-2xl text-slate-600 mb-10 leading-relaxed font-medium mx-auto max-w-3xl">
-            We turn your videos, job stories, and brand positioning into a trust-building system that helps homeowners choose you before the estimate ever happens.
+            We turn your marketing into a system that makes your estimate a formality
           </p>
           
           {/* Hero VSL Video Emulation */}
@@ -219,20 +220,11 @@ export default function NewCapeBrandBuilders() {
           </div>
 
           {/* Proof Block Repeated CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-8">
-            <Link
-              href="#video-case-study"
-              onClick={scrollToVideo}
-              className="flex items-center justify-center gap-2 bg-white border border-slate-200 px-8 py-4 rounded-full font-black text-lg hover:bg-slate-50 transition shadow-sm w-full sm:w-auto text-[#002542]"
-            >
-              <PlayCircle className="w-6 h-6 shrink-0 text-[#f1b40c]" />
-              See Real Contractor Results
-            </Link>
-            <span className="text-slate-400 font-bold hidden sm:block">OR</span>
+          <div className="flex justify-center mt-8">
             <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="text-white px-8 py-4 rounded-full font-black text-lg transition shadow-md hover:-translate-y-1 w-full sm:w-auto text-center uppercase"
+              className="text-white px-8 py-4 rounded-full font-black text-lg transition shadow-md hover:-translate-y-1 text-center uppercase"
               style={{ backgroundColor: colors.accent }}
             >
               Book Your Brand Strategy Call
@@ -279,7 +271,7 @@ export default function NewCapeBrandBuilders() {
           {/* Mid-page Bridge (Unified Label + Specific Text) */}
           <div className="bg-[#002542] rounded-3xl p-10 md:p-16 mb-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
             <div>
-              <h3 className="text-3xl font-black text-white mb-3">Want results like these in your market?</h3>
+              <h3 className="text-3xl font-black text-white mb-3">Want results like these for your business?</h3>
               <p className="text-slate-300 font-medium text-lg">Book your Brand Strategy Call and we'll map out how your contractor brand can earn more trust, book more estimates, and close more jobs.</p>
             </div>
             <Link
@@ -323,7 +315,7 @@ export default function NewCapeBrandBuilders() {
         <div className="max-w-5xl mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#002542]">
-              What We&apos;ll Map Out on Your Strategy Call
+              What We Map Out on Your Strategy Call
             </h2>
             <p className="text-xl text-slate-600 font-medium">
               The contractor-specific growth system that helps homeowners trust you sooner, book faster, and choose you over lower-priced competitors.
@@ -342,11 +334,10 @@ export default function NewCapeBrandBuilders() {
 
           <div className="space-y-6 mb-16">
             {[
-              { title: "Step 1 — Position You as the Local Authority", desc: "Define the exact customer profile, the painful problem, and the solution they're desperate for." },
-              { title: "Step 2 — High-Difference Offer + Website Overhaul", desc: "Give homeowners a clear, undeniable reason to choose you over 5 other quotes." },
-              { title: "Step 3 — Cinematic Trust Content", desc: "Brand film + story-driven case studies showing real transformations and results." },
-              { title: "Step 4 — YouTube Authority + SEO", desc: "Build a perpetual pipeline of warm, inbound leads searching for your expertise." },
-              { title: "Step 5 — Lead Nurture & Re-Engagement", desc: "Stay in front of interested homeowners and turn more existing interest into booked estimates." }
+              { title: "Phase 1 — Position You as the Local Authority", desc: "Define the exact customer profile, the painful problem, and the solution they're desperate for." },
+              { title: "Phase 2 — Custom Booking System Building", desc: "Brand film + story-driven case studies showing real transformations and results." },
+              { title: "Phase 3 — YouTube Authority + Email Newsletter", desc: "Build authority and humanize your brand while constantly nurturing new and existing audiences." },
+              { title: "Phase 4 — Run Ads", desc: "We drive paid traffic to this trust building content ecosystem to generate sales opportunities on auto-pilot." }
             ].map((step, idx) => (
               <div key={idx} className="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row gap-6 md:items-center hover:shadow-md transition duration-300 group">
                 <div className="w-16 h-16 rounded-xl shrink-0 flex items-center justify-center font-black text-3xl shadow-inner group-hover:scale-105 transition transform text-white" style={{ backgroundColor: colors.primary }}>
@@ -382,7 +373,7 @@ export default function NewCapeBrandBuilders() {
         <div className="max-w-6xl mx-auto px-4 w-full">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight max-w-4xl mx-auto">
-              Hundreds of thousands in trackable revenue generated for contractors just like you
+              Millions in trackable revenue generated for contractors just like you
             </h2>
             <div className="flex items-center justify-center gap-2 text-[#f1b40c]">
               {[...Array(5)].map((_, i) => <Star key={i} className="w-8 h-8 fill-current drop-shadow-sm" />)}
@@ -467,7 +458,7 @@ export default function NewCapeBrandBuilders() {
             {/* The New Way */}
             <div className="bg-[#002542] rounded-3xl p-8 md:p-12 shadow-xl flex flex-col relative overflow-hidden" style={{ border: `4px solid ${colors.accent}` }}>
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
-              <h3 className="text-2xl font-black text-white mb-8 border-b border-white/10 pb-6 leading-snug">What You Get With Our Contractor Growth System</h3>
+              <h3 className="text-2xl font-black text-white mb-8 border-b border-white/10 pb-6 leading-snug">What You Get With Our Constructive Video Funnel Blueprint</h3>
               <ul className="space-y-6 flex-1 text-lg font-bold text-slate-200">
                 <li className="flex items-start gap-4">
                   <CheckCircle className="w-8 h-8 text-[#f1b40c] shrink-0 mt-0.5" />
@@ -507,7 +498,7 @@ export default function NewCapeBrandBuilders() {
         <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
           
           <div>
-            <div className="inline-block px-4 py-1.5 bg-[#f70118]/10 text-[#f70118] font-black uppercase text-xs rounded-full mb-8 tracking-widest border border-[#f70118]/20">
+            <div className="inline-block px-4 py-1.5 bg-[#FF6B00]/10 text-[#FF6B00] font-black uppercase text-xs rounded-full mb-8 tracking-widest border border-[#FF6B00]/20">
               Limited Availability
             </div>
             {/* Mirror Hook at Bottom */}
@@ -515,10 +506,10 @@ export default function NewCapeBrandBuilders() {
               Add 20–30% More Booked Estimates in 90 Days — Starting With One Strategy Call
             </h2>
             <ul className="space-y-5 mb-12 text-xl font-bold text-slate-700">
-              <li className="flex items-center gap-4"><CheckCircle className="w-8 h-8 text-[#F70118]"/> More booked estimates</li>
-              <li className="flex items-center gap-4"><CheckCircle className="w-8 h-8 text-[#F70118]"/> Higher close rates</li>
-              <li className="flex items-center gap-4"><CheckCircle className="w-8 h-8 text-[#F70118]"/> Better-fit homeowners</li>
-              <li className="flex items-center gap-4"><CheckCircle className="w-8 h-8 text-[#F70118]"/> More predictable revenue</li>
+              <li className="flex items-center gap-4"><CheckCircle className="w-8 h-8 text-[#FF6B00]"/> More booked estimates</li>
+              <li className="flex items-center gap-4"><CheckCircle className="w-8 h-8 text-[#FF6B00]"/> Higher close rates</li>
+              <li className="flex items-center gap-4"><CheckCircle className="w-8 h-8 text-[#FF6B00]"/> Better-fit homeowners</li>
+              <li className="flex items-center gap-4"><CheckCircle className="w-8 h-8 text-[#FF6B00]"/> More predictable revenue</li>
             </ul>
 
             <div className="bg-slate-50 border border-slate-200 p-8 rounded-2xl mt-12 relative shadow-sm">
@@ -534,7 +525,14 @@ export default function NewCapeBrandBuilders() {
 
           {/* New Cape Pictures CRM Booking Form Embed */}
           <div className="bg-white p-2 rounded-2xl shadow-xl relative border border-slate-200 h-[700px] overflow-hidden">
-             <iframe src="https://link.cursivecrm.com/widget/booking/tRgGOQiQsmjldJZwy3JE" className="w-full h-full border-none" title="Booking Calendar"></iframe>
+             <iframe
+               src="https://link.cursivecrm.com/widget/booking/tRgGOQiQsmjldJZwy3JE"
+               style={{ width: '100%', border: 'none', overflow: 'hidden', height: '100%' }}
+               scrolling="no"
+               id="ghYJkHL5Fkodr2z79LN0_1774367714803"
+               title="Booking Calendar"
+             />
+             <Script src="https://link.cursivecrm.com/js/form_embed.js" strategy="lazyOnload" />
           </div>
         </div>
       </section>
