@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Script from 'next/script';
+import { caseStudies, mainVslVideoSrc } from './case-studies/data';
+import { HlsVideoModal } from './video-player';
 import {
-  PlayCircle,
   Play,
   Star,
   ShieldCheck,
-  ArrowRight,
   CheckCircle,
 } from 'lucide-react';
 
@@ -49,39 +49,6 @@ const reviewScreenshots = [
   { src: "/John_Stahl_review.png", width: 1304, height: 428 },
 ];
 
-const caseStudies = [
-  {
-    title: "How AG Williams Painting Generates $28k+ Months (15x ROI)",
-    tag: "Painting",
-    img: "https://newcapepictures.com/wp-content/uploads/2021/11/AG-Williams-Img-2.jpg",
-    videoId: "188"
-  },
-  {
-    title: "How Bella Contracting Generated $80k+ In Two Months (12x ROI)",
-    tag: "Contracting",
-    img: "https://newcapepictures.com/wp-content/uploads/2021/11/bella-contracting.jpg",
-    videoId: "187"
-  },
-  {
-    title: "How Jan Fence Increased Lead Gen Over 20%",
-    tag: "Fencing",
-    img: "https://newcapepictures.com/wp-content/uploads/2025/12/jan-fence.jpg",
-    videoId: "186"
-  },
-  {
-    title: "How Spectrum Painting Boosted Conversion Rates By 20%",
-    tag: "Painting",
-    img: "https://newcapepictures.com/wp-content/uploads/2025/12/spectrum-case-studt-hero-1024x572.jpg",
-    videoId: "185"
-  },
-  {
-    title: "How PB Innovations Scaled Using Our Video Strategy (30x ROI)",
-    tag: "Heavy Equipment",
-    img: "https://newcapepictures.com/wp-content/uploads/2025/12/pb-innovations.jpg",
-    videoId: "190"
-  }
-];
-
 export default function NewCapeBrandBuilders() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
@@ -116,10 +83,6 @@ export default function NewCapeBrandBuilders() {
     smoothScrollTo(e, "cta-section");
   };
 
-  const scrollToVideo = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    smoothScrollTo(e, "video-case-study");
-  };
-
   return (
     <div className="bg-white text-slate-900 antialiased font-sans selection:bg-[#FF6B00]/20">
       
@@ -145,16 +108,16 @@ export default function NewCapeBrandBuilders() {
           </h1>
 
           {/* Subheadline (Mechanism + De-risk) */}
-          <p className="text-xl md:text-2xl text-slate-600 mb-10 leading-relaxed font-medium mx-auto max-w-3xl">
+          <p className="text-xl md:text-2xl text-slate-600 mb-10 leading-relaxed font-medium mx-auto max-w-4xl">
             We turn your marketing into a system that makes your estimate a formality
           </p>
           
           {/* Hero VSL Video Emulation */}
           <div className="relative w-full max-w-4xl mx-auto aspect-video bg-black rounded-2xl shadow-2xl overflow-hidden mb-10 group cursor-pointer border border-slate-200" onClick={() => setIsVideoModalOpen(true)}>
-             <Image src="/greg-video-thumbnail.png" alt="VSL Video Thumbnail" fill className="object-cover opacity-70 group-hover:scale-105 transition duration-500" />
+             <Image src="/vsl-cover.png" alt="VSL Video Thumbnail" fill className="object-cover opacity-70 group-hover:scale-105 transition duration-500" />
              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.yellow }}>
-                  <Play className="w-8 h-8 text-black fill-black ml-1" />
+                <div className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.accent }}>
+                  <Play className="w-8 h-8 text-white fill-white ml-1" />
                 </div>
              </div>
           </div>
@@ -164,22 +127,20 @@ export default function NewCapeBrandBuilders() {
             <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="group text-white px-10 py-5 rounded-full font-black text-xl md:text-2xl transition-all shadow-xl hover:-translate-y-1 active:scale-95 flex items-center gap-3 relative overflow-hidden uppercase"
-              style={{ backgroundColor: colors.accent }}
+              className="bg-[#FF6B00] text-white px-10 py-5 rounded-full font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
             </Link>
             
             {/* Directly under Hero: Built specifically for... */}
-            <div className="max-w-3xl mx-auto mt-4">
+            <div className="w-full max-w-4xl mx-auto mt-4">
               <p className="text-sm font-bold text-slate-400 mb-3 text-center uppercase tracking-widest">
                 Built for contractors who want
               </p>
-              <ul className="text-[#002542] font-bold text-base md:text-lg flex gap-4 md:gap-6 justify-center flex-wrap">
-                <li className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500"/> More Booked Estimates</li>
-                <li className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500"/> Higher Close Rates</li>
-                <li className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500"/> Better-Fit Homeowners</li>
-                <li className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-green-500"/> More Trust Before the First Appointment</li>
+              <ul className="text-[#002542] font-bold text-[14px] sm:text-[15px] md:text-lg flex flex-col md:flex-row gap-4 md:gap-6 justify-center max-w-[320px] md:max-w-none mx-auto">
+                <li className="flex items-start md:items-center gap-2 text-left"><CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-[2px] md:mt-0"/> <span>More Booked Estimates</span></li>
+                <li className="flex items-start md:items-center gap-2 text-left"><CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-[2px] md:mt-0"/> <span>Higher Close Rates</span></li>
+                <li className="flex items-start md:items-center gap-2 text-left w-full md:w-auto"><CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-[2px] md:mt-0"/> <span className="leading-tight">More Trust Before the First Appointment</span></li>
               </ul>
             </div>
           </div>
@@ -224,8 +185,7 @@ export default function NewCapeBrandBuilders() {
             <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="text-white px-8 py-4 rounded-full font-black text-lg transition shadow-md hover:-translate-y-1 text-center uppercase"
-              style={{ backgroundColor: colors.accent }}
+              className="bg-[#FF6B00] text-white px-10 py-5 rounded-full font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
             </Link>
@@ -260,9 +220,9 @@ export default function NewCapeBrandBuilders() {
                 <div className="p-8 flex-1 flex flex-col">
                   <span className="text-xs font-black uppercase tracking-widest mb-3" style={{ color: colors.accent }}>{study.tag}</span>
                   <h3 className="font-black text-[#002542] text-xl leading-snug mb-6 flex-1">{study.title}</h3>
-                  <button className="text-sm font-black border border-slate-300 rounded-full py-3 text-[#002542] hover:bg-[#002542] hover:!text-white hover:border-[#002542] transition uppercase tracking-wider w-full">
+                  <Link href={`/demo/brand-builders-v2/case-studies/${study.videoId}`} className="block text-center text-sm font-black border border-slate-300 rounded-full py-3 text-[#002542] hover:bg-[#002542] hover:!text-white hover:border-[#002542] transition uppercase tracking-wider w-full">
                     View Case Study
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -272,13 +232,12 @@ export default function NewCapeBrandBuilders() {
           <div className="bg-[#002542] rounded-3xl p-10 md:p-16 mb-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
             <div>
               <h3 className="text-3xl font-black text-white mb-3">Want results like these for your business?</h3>
-              <p className="text-slate-300 font-medium text-lg">Book your Brand Strategy Call and we'll map out how your contractor brand can earn more trust, book more estimates, and close more jobs.</p>
+              <p className="text-slate-300 font-medium text-lg">Book your Brand Strategy Call and we&apos;ll map out how your contractor brand can earn more trust, book more estimates, and close more jobs.</p>
             </div>
             <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="text-white px-10 py-5 rounded-full font-black text-lg transition w-full md:w-auto text-center shrink-0 hover:-translate-y-1 active:scale-95 uppercase shadow-xl"
-              style={{ backgroundColor: colors.accent }}
+              className="bg-[#FF6B00] text-white px-10 py-5 rounded-full font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
             </Link>
@@ -299,9 +258,9 @@ export default function NewCapeBrandBuilders() {
                 <div className="p-8 flex-1 flex flex-col">
                   <span className="text-xs font-black uppercase tracking-widest mb-3" style={{ color: colors.accent }}>{study.tag}</span>
                   <h3 className="font-black text-[#002542] text-xl leading-snug mb-6 flex-1">{study.title}</h3>
-                  <button className="text-sm font-black border border-slate-300 rounded-full py-3 text-[#002542] hover:bg-[#002542] hover:!text-white hover:border-[#002542] transition uppercase tracking-wider w-full">
+                  <Link href={`/demo/brand-builders-v2/case-studies/${study.videoId}`} className="block text-center text-sm font-black border border-slate-300 rounded-full py-3 text-[#002542] hover:bg-[#002542] hover:!text-white hover:border-[#002542] transition uppercase tracking-wider w-full">
                     View Case Study
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -335,9 +294,10 @@ export default function NewCapeBrandBuilders() {
           <div className="space-y-6 mb-16">
             {[
               { title: "Phase 1 — Position You as the Local Authority", desc: "Define the exact customer profile, the painful problem, and the solution they're desperate for." },
-              { title: "Phase 2 — Custom Booking System Building", desc: "Brand film + story-driven case studies showing real transformations and results." },
-              { title: "Phase 3 — YouTube Authority + Email Newsletter", desc: "Build authority and humanize your brand while constantly nurturing new and existing audiences." },
-              { title: "Phase 4 — Run Ads", desc: "We drive paid traffic to this trust building content ecosystem to generate sales opportunities on auto-pilot." }
+              { title: "Phase 2 — Core Video Assets", desc: "Brand film + story-driven case studies showing real transformations and results." },
+              { title: "Phase 3 — Custom Booking System Building", desc: "Give homeowners a clear, undeniable reason to choose you over 5 other quotes." },
+              { title: "Phase 4 — YouTube Authority + Email Newsletter", desc: "Build authority and humanize your brand while constantly nurturing new and existing audiences." },
+              { title: "Phase 5 — Run Ads", desc: "We drive paid traffic to this trust building content ecosystem to generate sales opportunities on auto-pilot." }
             ].map((step, idx) => (
               <div key={idx} className="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row gap-6 md:items-center hover:shadow-md transition duration-300 group">
                 <div className="w-16 h-16 rounded-xl shrink-0 flex items-center justify-center font-black text-3xl shadow-inner group-hover:scale-105 transition transform text-white" style={{ backgroundColor: colors.primary }}>
@@ -359,10 +319,9 @@ export default function NewCapeBrandBuilders() {
             <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="text-white px-12 py-5 rounded-full font-black text-xl transition-all shadow-xl hover:-translate-y-1 active:scale-95 flex items-center gap-3 uppercase"
-              style={{ backgroundColor: colors.accent }}
+              className="bg-[#FF6B00] text-white px-10 py-5 rounded-full font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
-              Book Your Brand Strategy Call <ArrowRight className="w-6 h-6" />
+              Book Your Brand Strategy Call
             </Link>
           </div>
         </div>
@@ -403,8 +362,7 @@ export default function NewCapeBrandBuilders() {
           <a
             href="#cta-section"
             onClick={scrollToCTA}
-            className="inline-flex text-white px-12 py-5 rounded-full font-black text-xl transition shadow-xl hover:-translate-y-1 uppercase"
-            style={{ backgroundColor: colors.accent }}
+            className="bg-[#FF6B00] text-white px-8 py-4 rounded-full font-black transition shadow-md hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(14px,4.5vw,18px)] leading-none mx-auto"
           >
             Book Your Brand Strategy Call
           </a>
@@ -484,10 +442,9 @@ export default function NewCapeBrandBuilders() {
             <a
               href="#cta-section"
               onClick={scrollToCTA}
-              className="text-white px-12 py-5 rounded-full font-black text-xl transition-all shadow-xl hover:-translate-y-1 active:scale-95 flex items-center gap-3 uppercase"
-              style={{ backgroundColor: colors.accent }}
+              className="bg-[#FF6B00] text-white px-10 py-5 rounded-full font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
-              Book Your Brand Strategy Call <ArrowRight className="w-6 h-6" />
+              Book Your Brand Strategy Call
             </a>
           </div>
         </div>
@@ -545,18 +502,12 @@ export default function NewCapeBrandBuilders() {
       </footer>
 
       {/* Basic Video Modal representation */}
-      {isVideoModalOpen && (
-        <div className="fixed inset-0 z-100 bg-black/90 backdrop-blur-sm flex justify-center items-center p-4">
-            <div className="w-full max-w-5xl bg-black rounded-2xl overflow-hidden relative shadow-2xl border border-white/10">
-                <button onClick={() => setIsVideoModalOpen(false)} className="absolute top-4 right-4 text-white z-10 w-12 h-12 bg-white/10 flex items-center justify-center rounded-full hover:bg-white/20 transition font-bold text-xl">
-                    ✕
-                </button>
-                <div className="aspect-video flex items-center justify-center text-white/50 text-xl font-bold">
-                   [Presto Player Video 361 would load here]
-                </div>
-            </div>
-        </div>
-      )}
+      <HlsVideoModal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        src={mainVslVideoSrc}
+        poster="/vsl-cover.png"
+      />
 
       {/* Global CSS for Animations */}
       <style dangerouslySetInnerHTML={{__html: `
@@ -582,4 +533,3 @@ export default function NewCapeBrandBuilders() {
     </div>
   );
 }
-
