@@ -101,28 +101,7 @@ export function InlineVideoPlayer({
   playOnHover?: boolean;
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isInView, setIsInView] = useState(false);
   const hoverVideoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Start loading/playing only when in view
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, []);
 
   if (isPlaying) {
     return (
@@ -145,14 +124,13 @@ export function InlineVideoPlayer({
 
   const renderPreview = () => (
     <>
-      {hoverVideoSrc && isInView && (
+      {hoverVideoSrc && (
         <video
           ref={hoverVideoRef}
           src={hoverVideoSrc}
           loop
           muted
           playsInline
-          preload="auto"
           autoPlay={!playOnHover}
           className={`absolute inset-0 w-full h-full object-cover transition duration-500 z-10 ${playOnHover ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}
         />
@@ -164,7 +142,7 @@ export function InlineVideoPlayer({
         width={naturalAspect ? 1920 : undefined}
         height={naturalAspect ? 1080 : undefined}
         unoptimized={(thumbnail || '').toLowerCase().endsWith('.gif')}
-        className={`w-full ${naturalAspect ? 'h-auto' : 'h-full'} ${thumbnailFit === 'contain' ? 'object-contain' : 'object-cover'} transition duration-500 z-0 ${hoverVideoSrc && isInView ? (playOnHover ? 'opacity-100 group-hover:opacity-0' : 'opacity-0') : 'opacity-100 group-hover:scale-105'}`}
+        className={`w-full ${naturalAspect ? 'h-auto' : 'h-full'} ${thumbnailFit === 'contain' ? 'object-contain' : 'object-cover'} transition duration-500 z-0 ${hoverVideoSrc ? (playOnHover ? 'opacity-100 group-hover:opacity-0' : 'opacity-0') : 'group-hover:scale-105'}`}
       />
       <div className={`absolute inset-0 flex items-center justify-center pointer-events-none ${hoverVideoSrc ? 'z-20' : ''}`}>
         <div
@@ -180,7 +158,6 @@ export function InlineVideoPlayer({
   if (naturalAspect) {
     return (
       <div
-        ref={containerRef}
         className={`relative rounded-2xl overflow-hidden group cursor-pointer ${className}`}
         onClick={() => setIsPlaying(true)}
         onMouseEnter={handleMouseEnter}
@@ -193,7 +170,6 @@ export function InlineVideoPlayer({
 
   return (
     <div
-      ref={containerRef}
       className={`relative aspect-video rounded-2xl overflow-hidden group cursor-pointer bg-black ${className}`}
       onClick={() => setIsPlaying(true)}
       onMouseEnter={handleMouseEnter}

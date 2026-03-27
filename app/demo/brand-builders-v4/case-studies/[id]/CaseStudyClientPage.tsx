@@ -1,13 +1,13 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Script from 'next/script';
-import { CheckCircle, ShieldCheck, Target, Layers, Trophy, ThumbsUp, BarChart } from 'lucide-react';
+import { Play, CheckCircle, ShieldCheck, Target, Layers, Trophy, ThumbsUp, BarChart } from 'lucide-react';
 
 import type { CaseStudy } from '../data';
-import { InlineVideoPlayer } from '../../video-player';
+import { HlsVideoModal } from '../../video-player';
 
 const colors = {
   primary: '#002542',
@@ -82,6 +82,8 @@ export default function CaseStudyClientPage({
 }: {
   currentStudy: CaseStudy;
 }) {
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+
   const smoothScrollTo = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, targetId: string) => {
     e.preventDefault();
     const el = document.getElementById(targetId);
@@ -131,7 +133,7 @@ export default function CaseStudyClientPage({
           <Link
             href="#cta-section"
             onClick={scrollToCTA}
-            className="hidden items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white shadow-md transition hover:scale-105 active:scale-95 sm:flex"
+            className="hidden items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white shadow-md transition hover:scale-105 active:scale-95 sm:flex"
             style={{ backgroundColor: colors.accent }}
           >
             Book Your Strategy Call
@@ -141,7 +143,7 @@ export default function CaseStudyClientPage({
 
       <section className="relative overflow-hidden bg-white px-4 pb-24 pt-32 lg:pt-40">
         <div className="mx-auto max-w-5xl text-center relative z-10">
-          <div className="mb-8 inline-flex items-center gap-3 rounded-lg px-8 py-3 text-lg md:text-xl font-black uppercase tracking-wide text-white shadow-xl" style={{ backgroundColor: colors.accent }}>
+          <div className="mb-8 inline-flex items-center gap-3 rounded-full px-8 py-3 text-lg md:text-xl font-black uppercase tracking-wide text-white shadow-xl" style={{ backgroundColor: colors.accent }}>
             {currentStudy.eyebrow}
           </div>
 
@@ -157,20 +159,32 @@ export default function CaseStudyClientPage({
             <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="inline-flex w-full sm:w-auto items-center justify-center rounded-lg bg-[#FF6B00] px-10 py-5 text-center text-[clamp(16px,4.5vw,20px)] font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1"
+              className="inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-[#FF6B00] px-10 py-5 text-center text-[clamp(16px,4.5vw,20px)] font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1"
             >
               Book Your Strategy Call
             </Link>
           </div>
 
-          <InlineVideoPlayer
-            src={currentStudy.videoSrc}
-            poster={currentStudy.thumbnail || currentStudy.img}
-            thumbnail={currentStudy.thumbnail}
-            hoverVideoSrc={currentStudy.thumbnailVideo}
-            accentColor={colors.accent}
-            className="w-full max-w-5xl mx-auto shadow-2xl mb-16 border border-slate-200"
-          />
+          <button
+            onClick={() => setIsVideoModalOpen(true)}
+            className="group relative mb-16 block w-full max-w-5xl mx-auto cursor-pointer overflow-hidden rounded-3xl border border-slate-200 bg-black shadow-2xl"
+          >
+            <div className="relative aspect-video">
+              <Image
+                src={currentStudy.thumbnail || currentStudy.img}
+                alt={currentStudy.title}
+                fill
+                unoptimized={(currentStudy.thumbnail || '').toLowerCase().endsWith('.gif')}
+                className="object-cover opacity-70 transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-[#002542]/10 transition-colors group-hover:bg-transparent" />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full shadow-2xl transition duration-300 group-hover:scale-110" style={{ backgroundColor: colors.yellow }}>
+                  <Play className="ml-1 h-8 w-8 fill-black text-black" />
+                </div>
+              </div>
+            </div>
+          </button>
 
           <div className="rounded-3xl shadow-lg bg-[#002542] grid md:grid-cols-3 gap-8 p-10 md:p-12 mx-auto max-w-5xl relative overflow-hidden divide-y md:divide-y-0 md:divide-x divide-white/20">
             {currentStudy.heroStats.map((stat) => (
@@ -330,7 +344,7 @@ export default function CaseStudyClientPage({
       <section id="cta-section" className="bg-white px-4 py-24 md:py-32">
         <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-2 lg:items-center">
           <div>
-            <div className="mb-8 inline-block rounded-lg border border-[#FF6B00]/20 bg-[#FF6B00]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.24em] text-[#FF6B00]">
+            <div className="mb-8 inline-block rounded-full border border-[#FF6B00]/20 bg-[#FF6B00]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.24em] text-[#FF6B00]">
               Final Step
             </div>
             <h2 className="mb-8 text-5xl font-black leading-tight tracking-tight text-[#002542] lg:text-6xl">
@@ -385,6 +399,13 @@ export default function CaseStudyClientPage({
           © {new Date().getFullYear()} New Cape Pictures. All rights reserved.
         </p>
       </footer>
+
+      <HlsVideoModal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        src={currentStudy.videoSrc}
+        poster={currentStudy.thumbnail || currentStudy.img}
+      />
     </div>
   );
 }

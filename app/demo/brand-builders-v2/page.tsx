@@ -1,12 +1,11 @@
 "use client";
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Script from 'next/script';
-import { caseStudies, mainVslVideoSrc } from './case-studies/data';
-import { HlsVideoModal } from './video-player';
+import { caseStudies, mainVslVideoSrc, testimonialVideos } from './case-studies/data';
+import { InlineVideoPlayer } from './video-player';
 import {
-  Play,
   Star,
   ShieldCheck,
   CheckCircle,
@@ -15,7 +14,7 @@ import {
 const colors = {
   primary: '#002542',
   accent: '#FF6B00', // Orange accent
-  yellow: '#f1b40c', // New Cape Pictures Yellow
+  yellow: '#ff6b00', // Orange accent for play buttons
 };
 
 const clientLogos = [
@@ -50,8 +49,6 @@ const reviewScreenshots = [
 ];
 
 export default function NewCapeBrandBuilders() {
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-
   const smoothScrollTo = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, targetId: string) => {
     e.preventDefault();
     const el = document.getElementById(targetId);
@@ -98,7 +95,7 @@ export default function NewCapeBrandBuilders() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           
           {/* Header (Attention Avatar) */}
-          <div className="inline-flex text-white px-10 py-5 rounded-full font-black text-xl md:text-2xl shadow-xl items-center gap-3 uppercase mb-6" style={{ backgroundColor: colors.accent }}>
+          <div className="inline-flex text-white px-10 py-5 rounded-lg font-black text-xl md:text-2xl shadow-xl items-center gap-3 uppercase mb-6 animate-wobble" style={{ backgroundColor: colors.accent }}>
             Stop Wasting Money on Ads
           </div>
 
@@ -112,22 +109,24 @@ export default function NewCapeBrandBuilders() {
             We turn your marketing into a system that makes your estimate a formality
           </p>
           
-          {/* Hero VSL Video Emulation */}
-          <div className="relative w-full max-w-4xl mx-auto aspect-video bg-black rounded-2xl shadow-2xl overflow-hidden mb-10 group cursor-pointer border border-slate-200" onClick={() => setIsVideoModalOpen(true)}>
-             <Image src="/vsl-cover.png" alt="VSL Video Thumbnail" fill className="object-cover opacity-70 group-hover:scale-105 transition duration-500" />
-             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.accent }}>
-                  <Play className="w-8 h-8 text-white fill-white ml-1" />
-                </div>
-             </div>
-          </div>
+          {/* Hero VSL Video - Inline Player */}
+          <InlineVideoPlayer
+            src={mainVslVideoSrc}
+            poster="/vsl-cover.png"
+            thumbnail="/vsl-cover.png"
+            hoverVideoSrc={mainVslVideoSrc}
+            naturalAspect={true}
+            playOnHover={true}
+            accentColor={colors.accent}
+            className="w-full max-w-4xl mx-auto shadow-2xl mb-10 border border-slate-200"
+          />
 
           {/* Primary CTA Button */}
           <div className="flex flex-col items-center gap-4">
             <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="bg-[#FF6B00] text-white px-10 py-5 rounded-full font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
+              className="bg-[#FF6B00] text-white px-10 py-5 rounded-lg font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
             </Link>
@@ -185,7 +184,7 @@ export default function NewCapeBrandBuilders() {
             <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="bg-[#FF6B00] text-white px-10 py-5 rounded-full font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
+              className="bg-[#FF6B00] text-white px-10 py-5 rounded-lg font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
             </Link>
@@ -207,20 +206,20 @@ export default function NewCapeBrandBuilders() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {caseStudies.slice(0, 3).map((study, idx) => (
-              <div key={idx} className="group flex flex-col bg-slate-50 rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition duration-300">
-                <div className="relative aspect-video bg-black overflow-hidden cursor-pointer" onClick={() => setIsVideoModalOpen(true)}>
-                  <Image src={study.img} alt={study.title} fill className="object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition duration-500" />
-                  <div className="absolute inset-0 bg-[#002542]/20 group-hover:bg-transparent transition-colors"></div>
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.accent }}>
-                      <Play className="w-6 h-6 text-white fill-white ml-1" />
-                    </div>
-                  </div>
-                </div>
+              <div key={idx} className="group flex flex-col bg-slate-50 rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition duration-300">
+                <InlineVideoPlayer
+                  src={study.videoSrc}
+                  poster={study.img}
+                  thumbnail={study.thumbnail}
+                  hoverVideoSrc={study.thumbnailVideo}
+                  thumbnailFit="cover"
+                  accentColor={colors.accent}
+                  className="rounded-none rounded-t-2xl"
+                />
                 <div className="p-8 flex-1 flex flex-col">
                   <span className="text-xs font-black uppercase tracking-widest mb-3" style={{ color: colors.accent }}>{study.tag}</span>
                   <h3 className="font-black text-[#002542] text-xl leading-snug mb-6 flex-1">{study.title}</h3>
-                  <Link href={`/demo/brand-builders-v2/case-studies/${study.videoId}`} className="block text-center text-sm font-black border border-slate-300 rounded-full py-3 text-[#002542] hover:bg-[#002542] hover:!text-white hover:border-[#002542] transition uppercase tracking-wider w-full">
+                  <Link href={`/demo/brand-builders-v2/case-studies/${study.videoId}`} className="block text-center text-sm font-black border border-[#002542] rounded-lg py-3 bg-[#002542] text-white hover:bg-transparent hover:text-[#002542] transition uppercase tracking-wider w-full">
                     View Case Study
                   </Link>
                 </div>
@@ -237,7 +236,7 @@ export default function NewCapeBrandBuilders() {
             <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="bg-[#FF6B00] text-white px-10 py-5 rounded-full font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
+              className="bg-[#FF6B00] text-white px-10 py-5 rounded-lg font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
             </Link>
@@ -245,20 +244,20 @@ export default function NewCapeBrandBuilders() {
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             {caseStudies.slice(3, 5).map((study, idx) => (
-              <div key={idx} className="group flex flex-col bg-slate-50 rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition duration-300">
-                <div className="relative aspect-video bg-black overflow-hidden cursor-pointer" onClick={() => setIsVideoModalOpen(true)}>
-                  <Image src={study.img} alt={study.title} fill className="object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition duration-500" />
-                  <div className="absolute inset-0 bg-[#002542]/20 group-hover:bg-transparent transition-colors"></div>
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.accent }}>
-                      <Play className="w-6 h-6 text-white fill-white ml-1" />
-                    </div>
-                  </div>
-                </div>
+              <div key={idx} className="group flex flex-col bg-slate-50 rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition duration-300">
+                <InlineVideoPlayer
+                  src={study.videoSrc}
+                  poster={study.img}
+                  thumbnail={study.thumbnail}
+                  hoverVideoSrc={study.thumbnailVideo}
+                  thumbnailFit="cover"
+                  accentColor={colors.accent}
+                  className="rounded-none rounded-t-2xl"
+                />
                 <div className="p-8 flex-1 flex flex-col">
                   <span className="text-xs font-black uppercase tracking-widest mb-3" style={{ color: colors.accent }}>{study.tag}</span>
                   <h3 className="font-black text-[#002542] text-xl leading-snug mb-6 flex-1">{study.title}</h3>
-                  <Link href={`/demo/brand-builders-v2/case-studies/${study.videoId}`} className="block text-center text-sm font-black border border-slate-300 rounded-full py-3 text-[#002542] hover:bg-[#002542] hover:!text-white hover:border-[#002542] transition uppercase tracking-wider w-full">
+                  <Link href={`/demo/brand-builders-v2/case-studies/${study.videoId}`} className="block text-center text-sm font-black border border-[#002542] rounded-lg py-3 bg-[#002542] text-white hover:bg-transparent hover:text-[#002542] transition uppercase tracking-wider w-full">
                     View Case Study
                   </Link>
                 </div>
@@ -281,15 +280,15 @@ export default function NewCapeBrandBuilders() {
             </p>
           </div>
 
-          {/* Highlight Reel Moved from Hero */}
-          <div className="relative w-full max-w-4xl mx-auto aspect-video bg-black rounded-2xl shadow-2xl overflow-hidden mb-16 group cursor-pointer border border-slate-200" onClick={() => setIsVideoModalOpen(true)}>
-             <Image src="https://newcapepictures.com/wp-content/uploads/2025/12/spectrum-case-studt-hero-1024x572.jpg" alt="Highlight Reel Thumbnail" fill className="object-cover opacity-70 group-hover:scale-105 transition duration-500" />
-             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300" style={{ backgroundColor: colors.yellow }}>
-                  <Play className="w-8 h-8 text-black fill-black ml-1" />
-                </div>
-             </div>
-          </div>
+          {/* Highlight Reel - Inline Player */}
+          <InlineVideoPlayer
+            src={testimonialVideos.highlightReel}
+            poster="https://newcapepictures.com/wp-content/uploads/2025/12/spectrum-case-studt-hero-1024x572.jpg"
+            hoverVideoSrc={testimonialVideos.highlightReel}
+            thumbnailFit="cover"
+            accentColor={colors.yellow}
+            className="w-full max-w-4xl mx-auto shadow-2xl mb-16 border border-slate-200"
+          />
 
           <div className="space-y-6 mb-16">
             {[
@@ -319,7 +318,7 @@ export default function NewCapeBrandBuilders() {
             <Link
               href="#cta-section"
               onClick={scrollToCTA}
-              className="bg-[#FF6B00] text-white px-10 py-5 rounded-full font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
+              className="bg-[#FF6B00] text-white px-10 py-5 rounded-lg font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
             </Link>
@@ -362,7 +361,7 @@ export default function NewCapeBrandBuilders() {
           <a
             href="#cta-section"
             onClick={scrollToCTA}
-            className="bg-[#FF6B00] text-white px-8 py-4 rounded-full font-black transition shadow-md hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(14px,4.5vw,18px)] leading-none mx-auto"
+            className="bg-[#FF6B00] text-white px-8 py-4 rounded-lg font-black transition shadow-md hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(14px,4.5vw,18px)] leading-none mx-auto"
           >
             Book Your Brand Strategy Call
           </a>
@@ -419,19 +418,19 @@ export default function NewCapeBrandBuilders() {
               <h3 className="text-2xl font-black text-white mb-8 border-b border-white/10 pb-6 leading-snug">What You Get With Our Constructive Video Funnel Blueprint</h3>
               <ul className="space-y-6 flex-1 text-lg font-bold text-slate-200">
                 <li className="flex items-start gap-4">
-                  <CheckCircle className="w-8 h-8 text-[#f1b40c] shrink-0 mt-0.5" />
+                  <CheckCircle className="w-8 h-8 text-[#ff6b00] shrink-0 mt-0.5" />
                   <span className="text-white">A trust-building system that supports your sales process</span>
                 </li>
                 <li className="flex items-start gap-4">
-                  <CheckCircle className="w-8 h-8 text-[#f1b40c] shrink-0 mt-0.5" />
+                  <CheckCircle className="w-8 h-8 text-[#ff6b00] shrink-0 mt-0.5" />
                   <span className="text-white">Project stories and proof assets that make homeowners feel confident booking</span>
                 </li>
                 <li className="flex items-start gap-4">
-                  <CheckCircle className="w-8 h-8 text-[#f1b40c] shrink-0 mt-0.5" />
+                  <CheckCircle className="w-8 h-8 text-[#ff6b00] shrink-0 mt-0.5" />
                   <span className="text-white">Messaging that separates you from the cheaper quote</span>
                 </li>
                 <li className="flex items-start gap-4">
-                  <CheckCircle className="w-8 h-8 text-[#f1b40c] shrink-0 mt-0.5" />
+                  <CheckCircle className="w-8 h-8 text-[#ff6b00] shrink-0 mt-0.5" />
                   <span className="text-white">A rollout plan that improves booked estimates and close rate over time</span>
                 </li>
               </ul>
@@ -442,7 +441,7 @@ export default function NewCapeBrandBuilders() {
             <a
               href="#cta-section"
               onClick={scrollToCTA}
-              className="bg-[#FF6B00] text-white px-10 py-5 rounded-full font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
+              className="bg-[#FF6B00] text-white px-10 py-5 rounded-lg font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
             </a>
@@ -455,7 +454,7 @@ export default function NewCapeBrandBuilders() {
         <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
           
           <div>
-            <div className="inline-block px-4 py-1.5 bg-[#FF6B00]/10 text-[#FF6B00] font-black uppercase text-xs rounded-full mb-8 tracking-widest border border-[#FF6B00]/20">
+            <div className="inline-block px-4 py-1.5 bg-[#FF6B00]/10 text-[#FF6B00] font-black uppercase text-xs rounded-lg mb-8 tracking-widest border border-[#FF6B00]/20">
               Limited Availability
             </div>
             {/* Mirror Hook at Bottom */}
@@ -501,14 +500,6 @@ export default function NewCapeBrandBuilders() {
         <p className="font-medium text-slate-500 text-sm">© {new Date().getFullYear()} New Cape Pictures. All rights reserved.</p>
       </footer>
 
-      {/* Basic Video Modal representation */}
-      <HlsVideoModal
-        isOpen={isVideoModalOpen}
-        onClose={() => setIsVideoModalOpen(false)}
-        src={mainVslVideoSrc}
-        poster="/vsl-cover.png"
-      />
-
       {/* Global CSS for Animations */}
       <style dangerouslySetInnerHTML={{__html: `
         .mask-image-edges {
@@ -520,6 +511,21 @@ export default function NewCapeBrandBuilders() {
         }
         .animate-scroll-reviews {
             animation: scroll-reviews 120s linear infinite;
+        }
+        .animate-wobble {
+            animation: wobble 5s ease infinite;
+            transform-origin: center center;
+        }
+        @keyframes wobble {
+            0% { transform: rotate(0deg); }
+            3% { transform: rotate(3deg); }
+            6% { transform: rotate(-3deg); }
+            10% { transform: rotate(1.5deg); }
+            13% { transform: rotate(-1.5deg); }
+            16% { transform: rotate(0.75deg); }
+            19% { transform: rotate(-0.75deg); }
+            20% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
         }
         @keyframes scroll {
             0% { transform: translateX(0); }

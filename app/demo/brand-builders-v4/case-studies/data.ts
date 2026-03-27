@@ -8,7 +8,6 @@ export type CaseStudy = {
   tag: string;
   img: string;
   thumbnail?: string; // Optional custom thumbnail or GIF url
-  thumbnailVideo?: string; // Optional looping video snippet (.mp4/.webm)
   videoId: string;
   videoSrc: string;
   eyebrow: string;
@@ -34,7 +33,6 @@ export const mainVslVideoSrc =
 
 export const testimonialVideos = {
   agWilliams: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770d8bf31c0b31ad7321.mp4',
-  bella: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c68f727115ea98b8aeb8e9.mp4',
   newCapeAndPbInnovations: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770dffe25ab69ff5981c.mp4',
   newCapePictures: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770d334fe75bf0f64a94.mp4',
   duraFix: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770d4a4efa206a0a41f7.mp4',
@@ -54,7 +52,6 @@ export const caseStudies: CaseStudy[] = [
     img: "https://newcapepictures.com/wp-content/uploads/2021/11/AG-Williams-Img-2.jpg",
     videoId: "188",
     videoSrc: testimonialVideos.agWilliams,
-    thumbnailVideo: testimonialVideos.agWilliams,
     eyebrow: "Painting Case Study",
     subheadline:
       "AG Williams is a 120-year-old painting contractor based in New York. By combining strong authority positioning with strategic video assets, they turned their marketing into a consistent source of qualified sales conversations.",
@@ -105,7 +102,6 @@ export const caseStudies: CaseStudy[] = [
     img: "https://newcapepictures.com/wp-content/uploads/2021/11/bella-contracting.jpg",
     videoId: "187",
     videoSrc: 'https://vz-4623b833-cb9.b-cdn.net/288f32f9-b936-49c1-a45f-3ac63ed0fe60/playlist.m3u8',
-    thumbnailVideo: testimonialVideos.bella,
     eyebrow: "Contracting Case Study",
     subheadline:
       "Bella Contracting wanted to boost brand awareness, increase interaction, and attract higher-paying job opportunities. With the right video-first strategy, they generated $80k+ in two months and achieved a 12x ROI.",
@@ -158,7 +154,6 @@ export const caseStudies: CaseStudy[] = [
     img: "https://newcapepictures.com/wp-content/uploads/2025/12/jan-fence.jpg",
     videoId: "186",
     videoSrc: testimonialVideos.janFence,
-    thumbnailVideo: testimonialVideos.janFence,
     eyebrow: "Fencing Case Study",
     subheadline:
       "Jan Fence, a fencing company founded in 1955, used trust-building video assets to drive more traffic, improve conversion, and strengthen the value of the business itself.",
@@ -209,7 +204,6 @@ export const caseStudies: CaseStudy[] = [
     img: "https://newcapepictures.com/wp-content/uploads/2025/12/spectrum-case-studt-hero-1024x572.jpg",
     videoId: "185",
     videoSrc: testimonialVideos.spectrum,
-    thumbnailVideo: testimonialVideos.spectrum,
     eyebrow: "Painting / Concrete Coatings Case Study",
     subheadline:
       "Spectrum wanted stronger social presence and better-performing paid ads. With better video assets in place, they increased conversions, improved lead flow, and created more interest around the company.",
@@ -262,8 +256,7 @@ export const caseStudies: CaseStudy[] = [
     tag: "B2B / Industrial",
     img: "https://newcapepictures.com/wp-content/uploads/2025/12/pb-innovations.jpg",
     videoId: "190",
-    videoSrc: testimonialVideos.newCapeAndPbInnovations,
-    thumbnailVideo: testimonialVideos.pbInnovations,
+    videoSrc: testimonialVideos.pbInnovations,
     eyebrow: "B2B / Industrial Case Study",
     subheadline:
       "PB Innovations needed a better way to communicate complex technical products to investors, government bodies, and decision-makers. Strategic video helped simplify the message, strengthen authority, and contribute to major growth.",
