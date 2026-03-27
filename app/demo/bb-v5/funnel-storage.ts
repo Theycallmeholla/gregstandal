@@ -1,6 +1,6 @@
 "use client";
 
-import { FunnelData, MiniFormData, STORAGE_KEY, StepOneData } from "./funnel-data";
+import { FunnelData, MiniFormData, STORAGE_KEY, FullApplicationData } from "./funnel-data";
 
 export function readFunnelData(): FunnelData {
   if (typeof window === "undefined") {
@@ -26,13 +26,13 @@ export function writeMiniForm(data: MiniFormData) {
   );
 }
 
-export function writeStepOne(data: StepOneData) {
+export function writeFullApplication(data: FullApplicationData) {
   const current = readFunnelData();
   window.localStorage.setItem(
     STORAGE_KEY,
     JSON.stringify({
       ...current,
-      stepOne: data,
+      fullApplication: data,
     }),
   );
 }

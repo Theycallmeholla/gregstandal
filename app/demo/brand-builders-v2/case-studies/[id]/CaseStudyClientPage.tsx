@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Script from 'next/script';
-import { CheckCircle, ShieldCheck, Target, Layers, Trophy, ThumbsUp, BarChart } from 'lucide-react';
+import { CheckCircle, ShieldCheck, Target, Layers, Trophy, ThumbsUp, BarChart, ArrowRight, Play } from 'lucide-react';
 
 import type { CaseStudy } from '../data';
 import { InlineVideoPlayer } from '../../video-player';
@@ -79,8 +79,10 @@ function SectionShell({
 
 export default function CaseStudyClientPage({
   currentStudy,
+  relatedStudies,
 }: {
   currentStudy: CaseStudy;
+  relatedStudies: CaseStudy[];
 }) {
   const smoothScrollTo = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, targetId: string) => {
     e.preventDefault();
@@ -370,6 +372,78 @@ export default function CaseStudyClientPage({
           </div>
         </div>
       </section>
+
+      {relatedStudies.length > 0 && (
+        <section className="bg-slate-100 px-4 py-24 md:py-32 border-t border-slate-200">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-12 text-center">
+              <p className="mb-4 text-sm font-black uppercase tracking-[0.24em] text-[#FF6B00]">
+                Keep Reading
+              </p>
+              <h2 className="text-4xl font-black tracking-tight text-[#002542] md:text-5xl">
+                More Success Stories
+              </h2>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {relatedStudies.map((study) => (
+                <Link
+                  key={study.videoId}
+                  href={`/demo/brand-builders-v2/case-studies/${study.videoId}`}
+                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                >
+                  <div className="relative aspect-video w-full overflow-hidden bg-slate-200">
+                    {study.thumbnailVideo ? (
+                      <video
+                        src={study.thumbnailVideo}
+                        muted
+                        loop
+                        playsInline
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        onMouseEnter={(e) => e.currentTarget.play()}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.pause();
+                          e.currentTarget.currentTime = 0;
+                        }}
+                        poster={study.img}
+                      />
+                    ) : (
+                      <Image
+                        src={study.img}
+                        alt={study.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                      <span className="rounded-full bg-[#FF6B00] px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
+                        {study.tag}
+                      </span>
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-xl">
+                        <Play className="h-6 w-6 fill-[#002542] text-[#002542] ml-1" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="mb-4 text-lg font-black leading-tight text-[#002542] line-clamp-3 group-hover:text-[#FF6B00] transition-colors">
+                      {study.title}
+                    </h3>
+
+                    <div className="mt-auto flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#FF6B00]">
+                      View Case Study
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <footer className="border-t border-slate-800 bg-slate-900 py-12 text-center">
         <div className="mb-6 flex justify-center">

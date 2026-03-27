@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import Image from 'next/image';
-import { mainVslVideoSrc } from '../brand-builders-v2/case-studies/data';
+import { mainVslVideoSrc } from '../../brand-builders-v2/case-studies/data';
 import { InlineVideoPlayer } from '../video-player';
 import {
   CheckCircle,

@@ -18,29 +18,32 @@ export const testimonialVideos = {
 // ============================================
 // SECTION 1 – HERO (ATF)
 // ============================================
-export const heroLabel = "FOR ESTABLISHED HOME IMPROVEMENT & HOME SERVICE CONTRACTORS";
+export const heroLabel = "STOP WASTING MONEY ON ADS";
 
-export const heroHeadline =
-  "Add 20–30% More Booked Estimates in 90 Days From The Leads You Already Get";
+export const heroHeadline = {
+  prefix: "Add ",
+  highlight: "20–30% More Booked Estimates",
+  suffix: " in 90 Days for Home Improvement & Home Service Contractors",
+};
 
 export const heroSubheadline =
-  "We install a done-for-you marketing & follow-up system that turns your existing traffic, calls, and past quotes into booked estimates without hiring another 'lead gen' agency.";
+  "We turn your marketing into a system that makes your estimate a formality. Our system is built to help home improvement and home service contractors turn the attention they already have into more qualified booked estimates, better close rates, and stronger trust before the estimate.";
 
 export const heroBullets = [
-  "Turn more inbound calls and form fills into actual booked estimates",
-  "Re-activate past quotes and old leads sitting in your CRM",
-  "Track every booked estimate so you know exactly what you're getting",
+  "More Booked Estimates",
+  "Higher Close Rates",
+  "More Trust Before the First Appointment",
+  "No long-term contracts. Contractors only.",
 ];
 
 export const heroCta = "Apply For Your 90-Day Plan";
 
-export const heroTrustLine =
-  "No long-term contracts. Contractors only. We only win if your booked estimates go up.";
+export const heroTrustLine = "";
 
 // ============================================
 // SECTION 2 – VSL + HOW IT WORKS
 // ============================================
-export const vslHeadline = "How We Add More Booked Estimates Without More 'Leads'";
+export const vslHeadline = "More Booked Estimates Without More 'Leads'";
 
 export const processSteps = [
   {
@@ -124,11 +127,11 @@ export const tradeOptions = [
 ];
 
 export const revenueOptions = [
-  "Under $50k/month",
-  "$50k - $80k/month",
-  "$80k - $150k/month",
-  "$150k - $300k/month",
-  "$300k+/month",
+  "Under $80k/month",
+  "$80k–$150k/month",
+  "$150k–$300k/month",
+  "$300k–$500k/month",
+  "$500k+/month",
 ];
 
 export const leadSourceOptions = [
@@ -175,7 +178,7 @@ export type MiniFormData = {
 };
 
 // Full application form
-export type StepOneData = {
+export type FullApplicationData = {
   firstName: string;
   lastName: string;
   companyName: string;
@@ -183,11 +186,11 @@ export type StepOneData = {
   phone: string;
   trade: string;
   monthlyRevenue: string;
-  mainLeadSource: string;
+  leadSources: string[];
   biggestBottleneck: string;
 };
 
 export type FunnelData = {
   miniForm?: MiniFormData;
-  stepOne?: StepOneData;
+  fullApplication?: FullApplicationData;
 };
