@@ -443,7 +443,7 @@ export default function BrandBuildersV5LandingPage() {
       {/* SECTION 2 – VSL + HOW IT WORKS */}
       {/* ============================================ */}
       <section className="border-y border-slate-200 bg-slate-50 px-4 py-24">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-6xl">
           {/* Section headline */}
           <h2
             className="mb-12 text-center text-3xl font-black tracking-tight md:text-5xl"
