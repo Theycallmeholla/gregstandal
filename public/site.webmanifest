@@ -1,0 +1,17 @@
+{
+  "name": "Greg Standal | Contractor Marketing",
+  "short_name": "Greg Standal",
+  "description": "Add 20-30% more booked estimates in 90 days for home improvement & home service contractors.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#002542",
+  "icons": [
+    {
+      "src": "/GS-favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

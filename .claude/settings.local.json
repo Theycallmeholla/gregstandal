@@ -1,7 +1,20 @@
 {
   "permissions": {
     "allow": [
-      "mcp__context7-mcp__get-library-docs"
+      "mcp__context7-mcp__get-library-docs",
+      "mcp__puppeteer__puppeteer_navigate",
+      "mcp__puppeteer__puppeteer_evaluate",
+      "mcp__puppeteer__puppeteer_screenshot",
+      "mcp__puppeteer__puppeteer_click",
+      "mcp__puppeteer__puppeteer_fill",
+      "mcp__context7-mcp__resolve-library-id",
+      "mcp__schema-org__search_schemas",
+      "mcp__schema-org__get_schema_type",
+      "mcp__schema-org__get_type_properties",
+      "mcp__schema-org__generate_example",
+      "mcp__ghl__listContacts",
+      "mcp__ghl__searchGHL",
+      "WebFetch(domain:gregstandal.pages.dev)"
     ]
   }
 }

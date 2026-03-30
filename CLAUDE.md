@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A Next.js 16 static landing page experimentation platform for showcasing multiple marketing funnel variants. The project generates static HTML output (no backend) and is designed for A/B testing different landing page designs targeting contractors and service-based businesses.
+A Next.js 16 static landing page platform with client-side A/B testing for marketing funnels targeting contractors. Generates static HTML output (no backend) with weighted variant assignment stored in localStorage/cookies.
 
-**Note:** This project was recently refactored from a database-backed platform to a pure static export. The README.md references old Prisma/DB setup that no longer applies.
+**Note:** The README.md references an old database-backed architecture (Prisma, admin UI, webhooks) that no longer applies. This is now a pure static export.
 
 ## Development Commands
 
@@ -19,57 +19,86 @@ npm run lint     # Run ESLint
 
 ## Architecture
 
-### Static Export Configuration
-- `output: "export"` in next.config.ts generates fully static HTML
-- Images are unoptimized (`unoptimized: true`) for static hosting compatibility
-- Remote images allowed from `newcapepictures.com`
+### Static Export
+- `output: "export"` in next.config.ts generates static HTML
+- Images unoptimized for static hosting compatibility
 - Deploy to any static host (Vercel, Netlify, S3, etc.)
 
-### Route Structure
-- `/demo` - Server Component that reads `/app/demo/*` directories at build time, displays thumbnail gallery
-- `/demo/{route-name}` - Client Components (`"use client"`) for each landing page variant
-- `/demo/{route-name}/case-studies/[id]` - Dynamic case study detail pages
+### A/B Testing System
 
-### Key Patterns
+The core architecture uses category-based routing with client-side variant assignment:
 
-**Demo Pages:**
-- All demo pages are self-contained client components in `/app/demo/{route-name}/page.tsx`
-- Tailwind-first styling with hardcoded color objects per page
-- Common pattern: `const colors = { primary: '#002542', accent: '#FF6B00' }`
+**Route Flow:**
+1. `app/[category]/page.tsx` - Server component that reads experiment config at build time via `generateStaticParams()`
+2. `app/[category]/client.tsx` - Client component that assigns/retrieves variants and renders the appropriate page
 
-**Video Integration:**
-- Video player components in `video-player.tsx` handle both HLS streams and MP4 files
-- Three components: `HlsVideo` (direct player), `HlsVideoModal` (fullscreen), `InlineVideoPlayer` (thumbnail with play button)
-- Videos hosted on `assets.cdn.filesafe.space`
+**Experiment Configuration (`lib/ab-test/config.ts`):**
+```typescript
+CATEGORY_EXPERIMENTS: {
+  contractors: {
+    experimentId: 'contractors_hero_swap_v1',
+    variants: [
+      { id: 'v2_original', basePage: 'brand-builders-v2', heroVariant: 'original' },
+      { id: 'v6_swapped', basePage: 'bb-v6', heroVariant: 'swapped' },
+      // ...
+    ],
+    weights: [0.25, 0.25, 0.25, 0.25],  // Must sum to 1
+  },
+}
+```
 
-**Case Studies System:**
-- Content centralized in `/app/demo/{version}/case-studies/data.ts`
-- Strongly typed `CaseStudy` interface with 15+ fields
-- Dynamic route `[id]` renders from the data array
+**Variant Assignment (`lib/ab-test/experiment.ts`):**
+- `getOrAssignVariant()` - Checks localStorage first, falls back to cookie, then assigns new variant by weighted random
+- Persists to both localStorage and cookie for cross-session consistency
+- Tracks impressions via `trackExperimentImpression()` (once per session per experiment)
 
-**Thumbnail Generation:**
-- `scripts/capture-thumbnails.js` uses Puppeteer to screenshot each demo route
-- Captures at 1920x1080 viewport, saves to `public/thumbnails/`
-- Runs automatically with `npm run dev` via concurrently
+**Adding a New Category:**
+1. Add entry to `CATEGORY_EXPERIMENTS` in `lib/ab-test/config.ts`
+2. Route auto-generates via `generateStaticParams()`
+3. Ensure `basePage` values map to components in `client.tsx`
 
-### Analytics
-- GTM, GA4, and Hotjar injected in root layout via environment variables
-- Scripts load with `strategy="afterInteractive"`
+### Page Components
+
+Pages are composed from reusable heroes and shared components:
+
+- `components/pages/BrandBuildersV2Page.tsx` - Full page component accepting `heroVariant` prop
+- `components/pages/BBV6Page.tsx` - Alternative page design
+- `components/heroes/` - Swappable hero sections (original vs swapped variants)
+- `components/shared/` - Video player, forms, etc.
+
+### Content Data
+
+- `lib/data/case-studies.ts` - Centralized case study content with strongly-typed `CaseStudy` interface
+- Case study detail pages at `app/contractors/case-studies/[id]/`
+
+### Video Integration
+
+`components/shared/video-player.tsx` provides:
+- `HlsVideo` - Direct HLS.js player
+- `HlsVideoModal` - Fullscreen modal player
+- `InlineVideoPlayer` - Thumbnail with hover preview and click-to-play
+
+Videos hosted on `assets.cdn.filesafe.space`.
+
+### Analytics Events
+
+Tracking functions in `lib/ab-test/experiment.ts` push to `window.dataLayer` and `gtag()`:
+- `experiment_impression` - Variant viewed
+- `cta_click` - Button clicks with location context
+- `form_start` / `form_submit` - Form interactions
 
 ## Environment Variables
 
-Only analytics variables are actively used (all optional):
+All optional (analytics):
 ```bash
 NEXT_PUBLIC_GTM_ID=""      # Google Tag Manager
 NEXT_PUBLIC_GA4_ID=""      # Google Analytics 4
 NEXT_PUBLIC_HOTJAR_ID=""   # Hotjar heatmaps
 ```
 
-Legacy variables in `.env.example` (DATABASE_URL, ADMIN_*, GHL_*) are no longer used.
+## Adding New Pages/Variants
 
-## Creating New Demo Pages
-
-1. Create directory: `app/demo/{new-route-name}/`
-2. Add `page.tsx` with `"use client"` directive
-3. Thumbnail will be auto-generated on next `npm run dev`
-4. Page appears automatically in `/demo` gallery
+1. Create hero component in `components/heroes/`
+2. Create or extend page component in `components/pages/`
+3. Add `basePage` mapping in `app/[category]/client.tsx`
+4. Configure experiment in `lib/ab-test/config.ts`
