@@ -40,7 +40,7 @@ export function Step1Form({ className = '', context, redirectTo = '/contractors/
     const lastName = nameParts.slice(1).join(' ') || firstName; // Use first name as last if only one word
 
     try {
-      // Submit to GHL API
+      // Submit to Pages Function proxy (avoids CORS)
       await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

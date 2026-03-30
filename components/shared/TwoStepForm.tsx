@@ -91,7 +91,7 @@ export function TwoStepForm({ className = "", context, redirectPath }: TwoStepFo
     writeFullApplication(form);
 
     try {
-      // Submit to GHL API
+      // Submit to Pages Function proxy (avoids CORS)
       await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
