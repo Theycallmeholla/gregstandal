@@ -24,7 +24,11 @@ interface LeadPayload {
   experimentVariant?: string;
 }
 
-export const onRequestPost: PagesFunction = async (context) => {
+interface CFContext {
+  request: Request;
+}
+
+export async function onRequestPost(context: CFContext): Promise<Response> {
   try {
     const body: LeadPayload = await context.request.json();
 
