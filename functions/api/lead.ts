@@ -65,7 +65,7 @@ export async function onRequestPost(context: CFContext): Promise<Response> {
       trade: body.trade || "",
       monthly_revenue: body.monthlyRevenue || "",
       lead_sources: body.leadSources?.join(", ") || "",
-      biggest_bottleneck: body.biggestBottleneck || "",
+      what_are_your_biggest_challengesobstacles_youre_facing_right_now_in_your_business_please_be_as_detailed_as_possible: body.biggestBottleneck || "",
       form_type: body.formType,
       landing_page: body.landingPage,
       experiment_variant: body.experimentVariant || "",

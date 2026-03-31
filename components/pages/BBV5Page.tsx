@@ -292,16 +292,19 @@ export function BBV5Page({ heroVariant, context, category }: BBV5PageProps) {
             </div>
           )}
 
-          <div className="text-center">
-            <a
-              href="#apply-form"
-              onClick={(e) => handleCtaClick(e, 'proof_section')}
-              className="inline-flex items-center justify-center rounded-lg px-10 py-5 text-center text-[clamp(16px,4.5vw,22px)] font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1"
-              style={{ backgroundColor: colors.accent }}
-            >
-              Book Your Brand Strategy Call
-            </a>
-          </div>
+          {/* Only show CTA button for original variant (swapped has form right above) */}
+          {heroVariant === 'original' && (
+            <div className="text-center">
+              <a
+                href="#apply-form"
+                onClick={(e) => handleCtaClick(e, 'proof_section')}
+                className="inline-flex items-center justify-center rounded-lg px-10 py-5 text-center text-[clamp(16px,4.5vw,22px)] font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1"
+                style={{ backgroundColor: colors.accent }}
+              >
+                Book Your Brand Strategy Call
+              </a>
+            </div>
+          )}
         </div>
       </section>
 
