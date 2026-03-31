@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { CheckCircle, X, ArrowLeft } from "lucide-react";
+import { CheckCircle, X, ArrowLeft, Loader2 } from "lucide-react";
 import { InlineVideoPlayer } from "@/components/shared/video-player";
 import { BrandBuildersV2Hero } from "@/components/heroes/BrandBuildersV2Hero";
 import { trackCtaClick, trackFormStart, trackFormSubmit } from "@/lib/ab-test/experiment";
@@ -109,8 +109,11 @@ function TwoStepForm({
   category: string;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [step, setStep] = useState(1);
   const [hasStarted, setHasStarted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [consent, setConsent] = useState(false);
   const [form, setForm] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -130,17 +133,70 @@ function TwoStepForm({
     }
   };
 
-  const handleStep1Submit = (event: FormEvent<HTMLFormElement>) => {
+  const handleStep1Submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          phone: form.phone,
+          companyName: form.companyName,
+          formType: 'step1_form',
+          landingPage: pathname,
+          experimentVariant: context?.variant?.id,
+        }),
+      });
+    } catch (err) {
+      console.error('Step 1 submission error:', err);
+    }
+
+    if (context) {
+      trackFormSubmit(context, "two_step_application", { step: 1 });
+    }
+
+    setIsSubmitting(false);
     setStep(2);
   };
 
-  const handleStep2Submit = (event: FormEvent<HTMLFormElement>) => {
+  const handleStep2Submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
+
     writeFullApplication(form);
+
+    try {
+      await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          phone: form.phone,
+          companyName: form.companyName,
+          trade: form.trade,
+          monthlyRevenue: form.monthlyRevenue,
+          leadSources: form.leadSources,
+          biggestBottleneck: form.biggestBottleneck,
+          formType: 'full_application',
+          landingPage: pathname,
+          experimentVariant: context?.variant?.id,
+        }),
+      });
+    } catch (err) {
+      console.error('Lead submission error:', err);
+    }
+
     if (context) {
       trackFormSubmit(context, "two_step_application", { step: 2 });
     }
+
     router.push(`/${category}/thank-you`);
   };
 
@@ -237,12 +293,34 @@ function TwoStepForm({
           </div>
         </div>
 
+        <label className="mt-6 flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            required
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mt-0.5 h-5 w-5 rounded border-slate-300 text-[#FF6B00] focus:ring-[#FF6B00] cursor-pointer"
+          />
+          <span className="text-xs text-slate-500 leading-relaxed">
+            By submitting this form, I consent to receive SMS, emails, and calls from Brand Builders regarding my inquiry.
+            Message and data rates may apply. I can opt out at any time by replying STOP.
+          </span>
+        </label>
+
         <button
           type="submit"
-          className="mt-6 inline-flex w-full items-center justify-center rounded-lg px-8 py-4 text-center text-lg font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1"
+          disabled={isSubmitting || !consent}
+          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg px-8 py-4 text-center text-lg font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0"
           style={{ backgroundColor: colors.accent }}
         >
-          Continue
+          {isSubmitting ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              Sending...
+            </>
+          ) : (
+            "Continue"
+          )}
         </button>
         <p className="mt-3 text-center text-xs text-slate-400">
           We'll use this to personalize the next step.
@@ -275,6 +353,7 @@ function TwoStepForm({
             <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-500">Trade</span>
             <select
               required
+              disabled={isSubmitting}
               className="w-full rounded-lg border border-slate-200 px-4 py-3 text-base outline-none transition focus:border-[#FF6B00]"
               value={form.trade}
               onChange={(e) => setForm((current) => ({ ...current, trade: e.target.value }))}
@@ -290,6 +369,7 @@ function TwoStepForm({
             <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-500">Monthly Revenue</span>
             <select
               required
+              disabled={isSubmitting}
               className="w-full rounded-lg border border-slate-200 px-4 py-3 text-base outline-none transition focus:border-[#FF6B00]"
               value={form.monthlyRevenue}
               onChange={(e) => setForm((current) => ({ ...current, monthlyRevenue: e.target.value }))}
@@ -311,11 +391,12 @@ function TwoStepForm({
                 key={source}
                 type="button"
                 onClick={() => toggleLeadSource(source)}
+                disabled={isSubmitting}
                 className={`rounded-lg border px-3 py-2.5 text-left text-sm font-medium transition ${
                   form.leadSources.includes(source)
                     ? "border-[#FF6B00] bg-[#FF6B00]/10 text-[#FF6B00]"
                     : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
-                }`}
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {source}
               </button>
@@ -329,6 +410,7 @@ function TwoStepForm({
           </span>
           <textarea
             required
+            disabled={isSubmitting}
             rows={3}
             placeholder="What's the #1 thing keeping you from booking more estimates?"
             className="w-full resize-none rounded-lg border border-slate-200 px-4 py-3 text-base outline-none transition focus:border-[#FF6B00]"
@@ -342,17 +424,26 @@ function TwoStepForm({
         <button
           type="button"
           onClick={() => setStep(1)}
-          className="order-2 inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-6 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-50 sm:order-1"
+          disabled={isSubmitting}
+          className="order-2 inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-6 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-50 sm:order-1 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
         </button>
         <button
           type="submit"
-          className="order-1 inline-flex flex-1 items-center justify-center rounded-lg px-8 py-4 text-center text-lg font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1 sm:order-2"
+          disabled={isSubmitting}
+          className="order-1 inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-8 py-4 text-center text-lg font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1 sm:order-2 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0"
           style={{ backgroundColor: colors.accent }}
         >
-          Submit Application
+          {isSubmitting ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              Submitting...
+            </>
+          ) : (
+            "Submit Application"
+          )}
         </button>
       </div>
     </form>

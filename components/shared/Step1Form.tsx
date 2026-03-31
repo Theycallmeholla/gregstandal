@@ -22,6 +22,7 @@ export function Step1Form({ className = '', context, redirectTo = '/contractors/
     company: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [consent, setConsent] = useState(false);
   const hasTrackedStart = useRef(false);
 
   const handleFieldFocus = () => {
@@ -138,9 +139,23 @@ export function Step1Form({ className = '', context, redirectTo = '/contractors/
             disabled={isSubmitting}
           />
         </div>
+        <label className="flex items-start gap-3 cursor-pointer mt-4">
+          <input
+            type="checkbox"
+            required
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mt-0.5 h-5 w-5 rounded border-slate-300 text-[#FF6B00] focus:ring-[#FF6B00] cursor-pointer"
+          />
+          <span className="text-xs text-slate-500 leading-relaxed">
+            By submitting this form, I consent to receive SMS, emails, and calls from Brand Builders regarding my inquiry.
+            Message and data rates may apply. I can opt out at any time by replying STOP.
+          </span>
+        </label>
+
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !consent}
           className="w-full bg-[#FF6B00] text-white py-4 rounded-lg font-black uppercase tracking-wider hover:-translate-y-1 transition shadow-lg flex items-center justify-center gap-2 mt-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0"
         >
           {isSubmitting ? (
