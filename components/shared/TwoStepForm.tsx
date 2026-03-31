@@ -59,6 +59,7 @@ export function TwoStepForm({ className = "", context, redirectPath }: TwoStepFo
   const [step, setStep] = useState(1);
   const [hasStarted, setHasStarted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [consent, setConsent] = useState(false);
   const [form, setForm] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -78,8 +79,35 @@ export function TwoStepForm({ className = "", context, redirectPath }: TwoStepFo
     }
   };
 
-  const handleStep1Submit = (event: FormEvent<HTMLFormElement>) => {
+  const handleStep1Submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Submit Step 1 data to webhook (creates contact in GHL)
+      await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          phone: form.phone,
+          companyName: form.companyName,
+          formType: 'step1_form',
+          landingPage: pathname,
+          experimentVariant: context?.variant?.id,
+        }),
+      });
+    } catch (err) {
+      console.error('Step 1 submission error:', err);
+    }
+
+    if (context) {
+      trackFormSubmit(context, "two_step_application", { step: 1 });
+    }
+
+    setIsSubmitting(false);
     setStep(2);
   };
 
@@ -216,12 +244,34 @@ export function TwoStepForm({ className = "", context, redirectPath }: TwoStepFo
           </div>
         </div>
 
+        <label className="mt-6 flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            required
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mt-0.5 h-5 w-5 rounded border-slate-300 text-[#FF6B00] focus:ring-[#FF6B00] cursor-pointer"
+          />
+          <span className="text-xs text-slate-500 leading-relaxed">
+            By submitting this form, I consent to receive SMS, emails, and calls from Brand Builders regarding my inquiry.
+            Message and data rates may apply. I can opt out at any time by replying STOP.
+          </span>
+        </label>
+
         <button
           type="submit"
-          className="mt-6 inline-flex w-full items-center justify-center rounded-lg px-8 py-4 text-center text-lg font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1"
+          disabled={isSubmitting || !consent}
+          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg px-8 py-4 text-center text-lg font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0"
           style={{ backgroundColor: colors.accent }}
         >
-          Continue
+          {isSubmitting ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              Sending...
+            </>
+          ) : (
+            "Continue"
+          )}
         </button>
         <p className="mt-3 text-center text-xs text-slate-400">
           We'll use this to personalize the next step.
