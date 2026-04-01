@@ -122,6 +122,7 @@ export function getOrAssignVariant(category: string): ExperimentContext | null {
 
 /**
  * Push event to dataLayer and gtag.
+ * Waits for gtag to be available (up to 5 seconds) before firing.
  */
 export function pushEvent(event: string, payload: Record<string, unknown> = {}): void {
   if (typeof window === 'undefined') return;
@@ -129,8 +130,29 @@ export function pushEvent(event: string, payload: Record<string, unknown> = {}):
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event, ...payload });
 
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', event, payload);
+  // Try to send to gtag, with retry if not ready yet
+  const sendToGtag = () => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', event, payload);
+      console.log('[Analytics] Sent to gtag:', event, payload);
+      return true;
+    }
+    return false;
+  };
+
+  if (!sendToGtag()) {
+    // Retry every 100ms for up to 5 seconds
+    let attempts = 0;
+    const maxAttempts = 50;
+    const interval = setInterval(() => {
+      attempts++;
+      if (sendToGtag() || attempts >= maxAttempts) {
+        clearInterval(interval);
+        if (attempts >= maxAttempts) {
+          console.warn('[Analytics] gtag not available after 5s, event only in dataLayer:', event);
+        }
+      }
+    }, 100);
   }
 }
 
