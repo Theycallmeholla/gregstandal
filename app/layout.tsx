@@ -108,13 +108,16 @@ export const viewport: Viewport = {
   ],
 };
 
+// Analytics IDs - hardcoded to ensure they're always present in static builds
+const GA4_ID = "G-ZCG83580KZ";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
-  const ga4Id = process.env.NEXT_PUBLIC_GA4_ID;
+  const ga4Id = process.env.NEXT_PUBLIC_GA4_ID || GA4_ID;
   const hotjarId = process.env.NEXT_PUBLIC_HOTJAR_ID;
 
   return (
