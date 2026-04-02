@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { LandingPageJsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
 
@@ -117,7 +118,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
-  const ga4Id = process.env.NEXT_PUBLIC_GA4_ID || GA4_ID;
   const hotjarId = process.env.NEXT_PUBLIC_HOTJAR_ID;
 
   return (
@@ -131,7 +131,7 @@ export default function RootLayout({
 
         {/* DNS prefetch for analytics */}
         {gtmId && <link rel="dns-prefetch" href="https://www.googletagmanager.com" />}
-        {ga4Id && <link rel="dns-prefetch" href="https://www.google-analytics.com" />}
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://t.contentsquare.net" />
 
         {/* Contentsquare / Hotjar */}
@@ -164,23 +164,6 @@ export default function RootLayout({
           </>
         )}
 
-        {/* Google Analytics 4 */}
-        {ga4Id && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga4" strategy="afterInteractive">{`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${ga4Id}', {
-                page_path: window.location.pathname,
-              });
-            `}</Script>
-          </>
-        )}
 
         {/* Hotjar */}
         {hotjarId && (
@@ -198,6 +181,7 @@ export default function RootLayout({
 
         {children}
       </body>
+      <GoogleAnalytics gaId={GA4_ID} />
     </html>
   );
 }

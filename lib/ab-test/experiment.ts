@@ -3,7 +3,7 @@ import type { ExperimentContext, VariantConfig, VariantId } from './types';
 
 declare global {
   interface Window {
-    dataLayer: Record<string, unknown>[];
+    // dataLayer is declared by @next/third-parties/google
     gtag?: (...args: unknown[]) => void;
   }
 }
