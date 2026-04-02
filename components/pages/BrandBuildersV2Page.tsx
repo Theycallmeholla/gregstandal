@@ -9,7 +9,7 @@ import { InlineVideoPlayer } from '@/components/shared/video-player';
 import { BrandBuildersV2Hero } from '@/components/heroes/BrandBuildersV2Hero';
 import { BBV5Hero } from '@/components/heroes/BBV5Hero';
 import { TwoStepForm } from '@/components/shared/TwoStepForm';
-import { trackCtaClick } from '@/lib/ab-test/experiment';
+import { trackCtaClick, trackCaseStudyClick } from '@/lib/ab-test/experiment';
 import { useScrollTracking } from '@/lib/ab-test/useScrollTracking';
 import type { ExperimentContext } from '@/lib/ab-test/types';
 
@@ -97,11 +97,17 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
     }
   };
 
-  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>, location: string) => {
+  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>, location: string, buttonText?: string) => {
     if (context) {
-      trackCtaClick(context, location);
+      trackCtaClick(context, location, buttonText);
     }
     smoothScrollTo(e, 'cta-section');
+  };
+
+  const handleCaseStudyClick = (studyId: string, studyTitle: string) => {
+    if (context) {
+      trackCaseStudyClick(context, studyId, studyTitle);
+    }
   };
 
   return (
@@ -191,7 +197,7 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
             <div className="flex justify-center">
               <a
                 href="#cta-section"
-                onClick={(e) => handleCtaClick(e, 'vsl_section')}
+                onClick={(e) => handleCtaClick(e, 'vsl_section', 'Book Your Brand Strategy Call')}
                 className="inline-flex w-full items-center justify-center rounded-lg px-10 py-5 text-center text-[clamp(16px,4.5vw,22px)] font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1 md:w-auto"
                 style={{ backgroundColor: colors.accent }}
               >
@@ -246,7 +252,7 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
           <div className="flex justify-center mt-8">
             <a
               href="#cta-section"
-              onClick={(e) => handleCtaClick(e, 'proof_section')}
+              onClick={(e) => handleCtaClick(e, 'proof_section', 'Book Your Brand Strategy Call')}
               className="bg-[#FF6B00] text-white px-10 py-5 rounded-lg font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
@@ -297,6 +303,7 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
                   </h3>
                   <Link
                     href={`/contractors/case-studies/${study.videoId}`}
+                    onClick={() => handleCaseStudyClick(study.videoId, study.title)}
                     className="block text-center text-sm font-black border border-[#002542] rounded-lg py-3 bg-[#002542] text-white hover:bg-transparent hover:text-[#002542] transition uppercase tracking-wider w-full"
                   >
                     View Case Study
@@ -319,7 +326,7 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
             </div>
             <a
               href="#cta-section"
-              onClick={(e) => handleCtaClick(e, 'midpage_cta')}
+              onClick={(e) => handleCtaClick(e, 'midpage_cta', 'Book Your Brand Strategy Call')}
               className="bg-[#FF6B00] text-white px-10 py-5 rounded-lg font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
@@ -355,6 +362,7 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
                   </h3>
                   <Link
                     href={`/contractors/case-studies/${study.videoId}`}
+                    onClick={() => handleCaseStudyClick(study.videoId, study.title)}
                     className="block text-center text-sm font-black border border-[#002542] rounded-lg py-3 bg-[#002542] text-white hover:bg-transparent hover:text-[#002542] transition uppercase tracking-wider w-full"
                   >
                     View Case Study
@@ -452,7 +460,7 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
           <div className="flex justify-center">
             <a
               href="#cta-section"
-              onClick={(e) => handleCtaClick(e, 'how_it_works')}
+              onClick={(e) => handleCtaClick(e, 'how_it_works', 'Book Your Brand Strategy Call')}
               className="bg-[#FF6B00] text-white px-10 py-5 rounded-lg font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call
@@ -505,7 +513,7 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
         <div className="max-w-6xl mx-auto px-4 text-center w-full">
           <a
             href="#cta-section"
-            onClick={(e) => handleCtaClick(e, 'review_wall')}
+            onClick={(e) => handleCtaClick(e, 'review_wall', 'Book Your Brand Strategy Call')}
             className="bg-[#FF6B00] text-white px-8 py-4 rounded-lg font-black transition shadow-md hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(14px,4.5vw,18px)] leading-none mx-auto"
           >
             Book Your Brand Strategy Call
@@ -580,7 +588,7 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
           <div className="flex justify-center">
             <a
               href="#cta-section"
-              onClick={(e) => handleCtaClick(e, 'contrast_section')}
+              onClick={(e) => handleCtaClick(e, 'contrast_section', 'Book Your Brand Strategy Call')}
               className="bg-[#FF6B00] text-white px-10 py-5 rounded-lg font-black transition shadow-xl hover:-translate-y-1 text-center uppercase w-full md:w-auto inline-flex items-center justify-center text-[clamp(16px,4.5vw,22px)] leading-none mx-auto"
             >
               Book Your Brand Strategy Call

@@ -85,9 +85,9 @@ export function BBV5Page({ heroVariant, context, category }: BBV5PageProps) {
     }
   };
 
-  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>, location: string) => {
+  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>, location: string, buttonText?: string) => {
     if (context) {
-      trackCtaClick(context, location);
+      trackCtaClick(context, location, buttonText);
     }
     smoothScrollTo(e, "apply-form");
   };
@@ -150,7 +150,7 @@ export function BBV5Page({ heroVariant, context, category }: BBV5PageProps) {
           />
           <a
             href="#apply-form"
-            onClick={(e) => handleCtaClick(e, 'header_cta')}
+            onClick={(e) => handleCtaClick(e, 'header_cta', 'Book Your Strategy Call')}
             className="hidden items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white shadow-md transition hover:scale-105 active:scale-95 sm:flex"
             style={{ backgroundColor: colors.accent }}
           >
@@ -223,7 +223,7 @@ export function BBV5Page({ heroVariant, context, category }: BBV5PageProps) {
           <div className="flex justify-center">
             <a
               href="#apply-form"
-              onClick={(e) => handleCtaClick(e, 'strategy_section')}
+              onClick={(e) => handleCtaClick(e, 'strategy_section', 'Book Your Brand Strategy Call')}
               className="inline-flex w-full items-center justify-center rounded-lg px-10 py-5 text-center text-[clamp(16px,4.5vw,22px)] font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1 md:w-auto"
               style={{ backgroundColor: colors.accent }}
             >
@@ -303,7 +303,7 @@ export function BBV5Page({ heroVariant, context, category }: BBV5PageProps) {
             <div className="text-center">
               <a
                 href="#apply-form"
-                onClick={(e) => handleCtaClick(e, 'proof_section')}
+                onClick={(e) => handleCtaClick(e, 'proof_section', 'Book Your Brand Strategy Call')}
                 className="inline-flex items-center justify-center rounded-lg px-10 py-5 text-center text-[clamp(16px,4.5vw,22px)] font-black uppercase leading-none text-white shadow-xl transition hover:-translate-y-1"
                 style={{ backgroundColor: colors.accent }}
               >

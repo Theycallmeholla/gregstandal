@@ -1,9 +1,9 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { trackFormStart, trackFormSubmit } from "@/lib/ab-test/experiment";
+import { trackFormStart, trackFormSubmit, trackFormAbandon } from "@/lib/ab-test/experiment";
 import type { ExperimentContext } from "@/lib/ab-test/types";
 
 const colors = {
@@ -71,6 +71,28 @@ export function TwoStepForm({ className = "", context, redirectPath }: TwoStepFo
     leadSources: [],
     biggestBottleneck: "",
   });
+  const formCompletedRef = useRef(false);
+  const currentStepRef = useRef(1);
+
+  // Keep step ref in sync
+  useEffect(() => {
+    currentStepRef.current = step;
+  }, [step]);
+
+  // Track form abandonment when user leaves page
+  useEffect(() => {
+    if (!context) return;
+
+    const handleBeforeUnload = () => {
+      // Only track abandonment if form was started but not completed
+      if (hasStarted && !formCompletedRef.current) {
+        trackFormAbandon(context, "two_step_application", currentStepRef.current, 2);
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [context, hasStarted]);
 
   const handleFieldFocus = () => {
     if (!hasStarted && context) {
@@ -146,6 +168,9 @@ export function TwoStepForm({ className = "", context, redirectPath }: TwoStepFo
     if (context) {
       trackFormSubmit(context, "two_step_application", { step: 2 });
     }
+
+    // Mark form as completed to prevent abandonment tracking
+    formCompletedRef.current = true;
 
     // Always redirect regardless of API result
     router.push(redirectPath);

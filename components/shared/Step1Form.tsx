@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import type { ExperimentContext } from '@/lib/ab-test/types';
-import { trackFormStart, trackFormSubmit } from '@/lib/ab-test/experiment';
+import { trackFormStart, trackFormSubmit, trackFormAbandon } from '@/lib/ab-test/experiment';
 
 interface Step1FormProps {
   className?: string;
@@ -24,6 +24,22 @@ export function Step1Form({ className = '', context, redirectTo = '/contractors/
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [consent, setConsent] = useState(false);
   const hasTrackedStart = useRef(false);
+  const formCompletedRef = useRef(false);
+
+  // Track form abandonment when user leaves page
+  useEffect(() => {
+    if (!context) return;
+
+    const handleBeforeUnload = () => {
+      // Only track abandonment if form was started but not completed
+      if (hasTrackedStart.current && !formCompletedRef.current) {
+        trackFormAbandon(context, "step1_form", 1, 1);
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [context]);
 
   const handleFieldFocus = () => {
     if (hasTrackedStart.current || !context) return;
@@ -65,6 +81,9 @@ export function Step1Form({ className = '', context, redirectTo = '/contractors/
     if (context) {
       trackFormSubmit(context, 'step1_form');
     }
+
+    // Mark form as completed to prevent abandonment tracking
+    formCompletedRef.current = true;
 
     // Always redirect regardless of API result
     router.push(redirectTo);

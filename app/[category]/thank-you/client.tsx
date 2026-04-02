@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import { CheckCircle, Calendar, ShieldCheck } from "lucide-react";
 import { InlineVideoPlayer } from "@/components/shared/video-player";
+import { getOrAssignVariant, trackConversion } from "@/lib/ab-test/experiment";
 
 const colors = {
   primary: "#002542",
@@ -16,6 +18,13 @@ interface ThankYouPageClientProps {
 }
 
 export function ThankYouPageClient({ category }: ThankYouPageClientProps) {
+  // Track conversion on mount
+  useEffect(() => {
+    const context = getOrAssignVariant(category);
+    if (context) {
+      trackConversion(context, "form_completion");
+    }
+  }, [category]);
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 antialiased selection:bg-[#FF6B00]/20">
       {/* Header */}

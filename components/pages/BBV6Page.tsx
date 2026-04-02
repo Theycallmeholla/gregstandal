@@ -8,7 +8,7 @@ import { InlineVideoPlayer } from '@/components/shared/video-player';
 import { BrandBuildersV2Hero } from '@/components/heroes/BrandBuildersV2Hero';
 import { BBV6Hero } from '@/components/heroes/BBV6Hero';
 import { Step1Form } from '@/components/shared/Step1Form';
-import { trackCtaClick } from '@/lib/ab-test/experiment';
+import { trackCtaClick, trackCaseStudyClick } from '@/lib/ab-test/experiment';
 import { useScrollTracking } from '@/lib/ab-test/useScrollTracking';
 import type { ExperimentContext } from '@/lib/ab-test/types';
 
@@ -73,11 +73,17 @@ export function BBV6Page({ heroVariant, context }: BBV6PageProps) {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>, location: string) => {
+  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>, location: string, buttonText?: string) => {
     if (context) {
-      trackCtaClick(context, location);
+      trackCtaClick(context, location, buttonText);
     }
     smoothScrollTo(e, 'cta-section');
+  };
+
+  const handleCaseStudyClick = (studyId: string, studyTitle: string) => {
+    if (context) {
+      trackCaseStudyClick(context, studyId, studyTitle);
+    }
   };
 
   return (
@@ -193,6 +199,7 @@ export function BBV6Page({ heroVariant, context }: BBV6PageProps) {
                   </h3>
                   <Link
                     href={`/contractors/case-studies/${study.videoId}`}
+                    onClick={() => handleCaseStudyClick(study.videoId, study.title)}
                     className="block text-center text-sm font-black border border-[#002542] rounded-lg py-3 bg-[#002542] text-white hover:bg-transparent hover:text-[#002542] transition uppercase tracking-wider w-full"
                   >
                     View Case Study
@@ -257,7 +264,7 @@ export function BBV6Page({ heroVariant, context }: BBV6PageProps) {
 
                 <a
                   href="#cta-section"
-                  onClick={(e) => handleCtaClick(e, 'who_for_card')}
+                  onClick={(e) => handleCtaClick(e, 'who_for_card', 'Apply for Your Plan')}
                   className="w-full bg-[#FF6B00] text-white py-4 rounded-lg font-black uppercase tracking-wider hover:-translate-y-1 transition text-center block"
                 >
                   Apply for Your Plan
