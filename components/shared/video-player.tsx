@@ -1,16 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { Play, Loader2, RefreshCw } from 'lucide-react';
+import { Play, RefreshCw } from 'lucide-react';
 import Image from 'next/image';
 import { trackVideoStart, trackVideoProgress, trackVideoComplete } from '@/lib/ab-test/experiment';
 import type { ExperimentContext } from '@/lib/ab-test/types';
 
 const VIDEO_MILESTONES = [25, 50, 75];
-const STALL_TIMEOUT_MS = 5000;
+const STALL_TIMEOUT_MS = 8000;
 const MAX_RETRY_ATTEMPTS = 3;
-
-type VideoState = 'loading' | 'playing' | 'paused' | 'buffering' | 'error' | 'stalled';
 
 function VideoPlayer({
   src,
@@ -32,9 +30,7 @@ function VideoPlayer({
   const hasStarted = useRef(false);
   const stallTimerRef = useRef<NodeJS.Timeout | null>(null);
   const retryCountRef = useRef(0);
-  const lastPlaybackTime = useRef(0);
 
-  const [videoState, setVideoState] = useState<VideoState>('loading');
   const [showRetry, setShowRetry] = useState(false);
 
   const clearStallTimer = useCallback(() => {
@@ -49,7 +45,6 @@ function VideoPlayer({
     if (!video) return;
 
     if (retryCountRef.current >= MAX_RETRY_ATTEMPTS) {
-      setVideoState('error');
       setShowRetry(true);
       return;
     }
@@ -60,25 +55,24 @@ function VideoPlayer({
     const currentTime = video.currentTime;
     video.load();
     video.currentTime = Math.max(0, currentTime - 0.5);
-    video.play().catch(() => {
-      setVideoState('error');
-      setShowRetry(true);
-    });
+    video.play().catch(() => setShowRetry(true));
   }, []);
 
   const handleRetryClick = useCallback(() => {
     retryCountRef.current = 0;
     setShowRetry(false);
-    setVideoState('loading');
-    attemptRecovery();
-  }, [attemptRecovery]);
+    const video = videoRef.current;
+    if (video) {
+      video.load();
+      video.play().catch(console.error);
+    }
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     video.src = src;
-    video.preload = 'auto';
 
     if (autoPlay) {
       setTimeout(() => video.play().catch(console.error), 50);
@@ -86,14 +80,12 @@ function VideoPlayer({
 
     const title = videoTitle || src.split('/').pop() || 'unknown';
 
-    const handleLoadStart = () => setVideoState('loading');
     const handleCanPlay = () => {
-      if (videoState === 'loading') setVideoState('paused');
       retryCountRef.current = 0;
+      setShowRetry(false);
     };
 
     const handlePlay = () => {
-      setVideoState('playing');
       clearStallTimer();
       if (context && !hasStarted.current) {
         hasStarted.current = true;
@@ -101,35 +93,21 @@ function VideoPlayer({
       }
     };
 
-    const handlePause = () => {
-      if (!video.ended) setVideoState('paused');
-      clearStallTimer();
-    };
+    const handlePause = () => clearStallTimer();
 
     const handleWaiting = () => {
-      setVideoState('buffering');
+      clearStallTimer();
       stallTimerRef.current = setTimeout(() => {
         if (video.paused) return;
         console.log('[Video] Stall detected, attempting recovery');
-        setVideoState('stalled');
         attemptRecovery();
       }, STALL_TIMEOUT_MS);
     };
 
-    const handlePlaying = () => {
-      setVideoState('playing');
-      clearStallTimer();
-    };
+    const handlePlaying = () => clearStallTimer();
 
     const handleTimeUpdate = () => {
-      if (video.currentTime !== lastPlaybackTime.current) {
-        lastPlaybackTime.current = video.currentTime;
-        if (videoState === 'buffering' || videoState === 'stalled') {
-          setVideoState('playing');
-          clearStallTimer();
-        }
-      }
-
+      clearStallTimer();
       if (!context || !video.duration) return;
       const percent = Math.round((video.currentTime / video.duration) * 100);
       for (const milestone of VIDEO_MILESTONES) {
@@ -145,25 +123,17 @@ function VideoPlayer({
       if (retryCountRef.current < MAX_RETRY_ATTEMPTS) {
         attemptRecovery();
       } else {
-        setVideoState('error');
         setShowRetry(true);
       }
     };
 
-    const handleStalled = () => {
-      console.log('[Video] Network stall detected');
-      setVideoState('buffering');
-    };
-
     const handleEnded = () => {
-      setVideoState('paused');
       clearStallTimer();
       if (context) {
         trackVideoComplete(context, title, video.duration || 0);
       }
     };
 
-    video.addEventListener('loadstart', handleLoadStart);
     video.addEventListener('canplay', handleCanPlay);
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
@@ -171,12 +141,10 @@ function VideoPlayer({
     video.addEventListener('playing', handlePlaying);
     video.addEventListener('timeupdate', handleTimeUpdate);
     video.addEventListener('error', handleError);
-    video.addEventListener('stalled', handleStalled);
     video.addEventListener('ended', handleEnded);
 
     return () => {
       clearStallTimer();
-      video.removeEventListener('loadstart', handleLoadStart);
       video.removeEventListener('canplay', handleCanPlay);
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
@@ -184,12 +152,9 @@ function VideoPlayer({
       video.removeEventListener('playing', handlePlaying);
       video.removeEventListener('timeupdate', handleTimeUpdate);
       video.removeEventListener('error', handleError);
-      video.removeEventListener('stalled', handleStalled);
       video.removeEventListener('ended', handleEnded);
     };
-  }, [src, autoPlay, context, videoTitle, videoState, clearStallTimer, attemptRecovery]);
-
-  const showOverlay = videoState === 'loading' || videoState === 'buffering' || videoState === 'stalled' || showRetry;
+  }, [src, autoPlay, context, videoTitle, clearStallTimer, attemptRecovery]);
 
   return (
     <div className={`relative ${className}`}>
@@ -201,24 +166,15 @@ function VideoPlayer({
         controls
         preload="auto"
       />
-      {showOverlay && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50 pointer-events-none">
-          {showRetry ? (
-            <button
-              onClick={handleRetryClick}
-              className="pointer-events-auto flex flex-col items-center gap-2 text-white hover:text-orange-400 transition-colors"
-            >
-              <RefreshCw className="w-12 h-12" />
-              <span className="text-sm font-medium">Tap to retry</span>
-            </button>
-          ) : (
-            <div className="flex flex-col items-center gap-2 text-white">
-              <Loader2 className="w-12 h-12 animate-spin" />
-              <span className="text-sm font-medium">
-                {videoState === 'stalled' ? 'Reconnecting...' : 'Loading...'}
-              </span>
-            </div>
-          )}
+      {showRetry && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/70">
+          <button
+            onClick={handleRetryClick}
+            className="flex flex-col items-center gap-2 text-white hover:text-orange-400 transition-colors"
+          >
+            <RefreshCw className="w-12 h-12" />
+            <span className="text-sm font-medium">Tap to retry</span>
+          </button>
         </div>
       )}
     </div>
