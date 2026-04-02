@@ -3,6 +3,7 @@
 import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 import { InlineVideoPlayer } from '@/components/shared/video-player';
+import type { ExperimentContext } from '@/lib/ab-test/types';
 
 interface BBV6HeroProps {
   colors: {
@@ -11,9 +12,10 @@ interface BBV6HeroProps {
   };
   mainVslVideoSrc: string;
   formComponent: React.ReactNode;
+  context?: ExperimentContext | null;
 }
 
-export function BBV6Hero({ colors, mainVslVideoSrc, formComponent }: BBV6HeroProps) {
+export function BBV6Hero({ colors, mainVslVideoSrc, formComponent, context }: BBV6HeroProps) {
   return (
     <section className="pt-32 pb-24 px-4 bg-white relative overflow-hidden">
       <header className="absolute top-0 left-0 w-full py-8 px-4">
@@ -64,6 +66,8 @@ export function BBV6Hero({ colors, mainVslVideoSrc, formComponent }: BBV6HeroPro
             playOnHover={true}
             accentColor={colors.accent}
             className="w-full shadow-2xl border border-slate-200"
+            context={context}
+            videoTitle="Hero VSL"
           />
         </div>
         <div className="lg:col-span-5 lg:sticky lg:top-32">

@@ -7,6 +7,7 @@ import { TwoStepForm } from "@/components/shared/TwoStepForm";
 import { InlineVideoPlayer } from "@/components/shared/video-player";
 import { BrandBuildersV2Hero } from "@/components/heroes/BrandBuildersV2Hero";
 import { trackCtaClick } from "@/lib/ab-test/experiment";
+import { useScrollTracking } from "@/lib/ab-test/useScrollTracking";
 import type { ExperimentContext } from "@/lib/ab-test/types";
 
 const colors = {
@@ -73,6 +74,9 @@ interface BBV5PageProps {
 }
 
 export function BBV5Page({ heroVariant, context, category }: BBV5PageProps) {
+  // Track scroll depth
+  useScrollTracking(context);
+
   const smoothScrollTo = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, targetId: string) => {
     e.preventDefault();
     const el = document.getElementById(targetId);
@@ -187,6 +191,8 @@ export function BBV5Page({ heroVariant, context, category }: BBV5PageProps) {
               playOnHover={true}
               accentColor={colors.accent}
               className="mx-auto mb-16 w-full max-w-4xl border border-slate-200 shadow-2xl"
+              context={context}
+              videoTitle="Main VSL"
             />
           )}
 

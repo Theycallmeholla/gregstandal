@@ -225,3 +225,81 @@ export function trackFormSubmit(
     ...extra,
   });
 }
+
+/**
+ * Track scroll depth milestones (25%, 50%, 75%, 90%).
+ */
+export function trackScrollDepth(
+  context: ExperimentContext,
+  percent: number
+): void {
+  const sessionKey = `scroll_${context.experimentId}:${percent}`;
+  if (sessionStorage.getItem(sessionKey)) return;
+  sessionStorage.setItem(sessionKey, '1');
+
+  pushEvent('scroll', {
+    category: context.category,
+    experiment_id: context.experimentId,
+    variant_id: context.variant.id,
+    percent_scrolled: percent,
+  });
+}
+
+/**
+ * Track video start.
+ */
+export function trackVideoStart(
+  context: ExperimentContext,
+  videoTitle: string,
+  videoDuration: number,
+  extra: Record<string, unknown> = {}
+): void {
+  pushEvent('video_start', {
+    category: context.category,
+    experiment_id: context.experimentId,
+    variant_id: context.variant.id,
+    video_title: videoTitle,
+    video_duration: videoDuration,
+    ...extra,
+  });
+}
+
+/**
+ * Track video progress milestones (25%, 50%, 75%).
+ */
+export function trackVideoProgress(
+  context: ExperimentContext,
+  videoTitle: string,
+  videoPercent: number,
+  videoDuration: number,
+  extra: Record<string, unknown> = {}
+): void {
+  pushEvent('video_progress', {
+    category: context.category,
+    experiment_id: context.experimentId,
+    variant_id: context.variant.id,
+    video_title: videoTitle,
+    video_percent: videoPercent,
+    video_duration: videoDuration,
+    ...extra,
+  });
+}
+
+/**
+ * Track video complete.
+ */
+export function trackVideoComplete(
+  context: ExperimentContext,
+  videoTitle: string,
+  videoDuration: number,
+  extra: Record<string, unknown> = {}
+): void {
+  pushEvent('video_complete', {
+    category: context.category,
+    experiment_id: context.experimentId,
+    variant_id: context.variant.id,
+    video_title: videoTitle,
+    video_duration: videoDuration,
+    ...extra,
+  });
+}

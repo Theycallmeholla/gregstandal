@@ -1,21 +1,31 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
-import { X, Play } from 'lucide-react';
+import { Play } from 'lucide-react';
 import Image from 'next/image';
+import { trackVideoStart, trackVideoProgress, trackVideoComplete } from '@/lib/ab-test/experiment';
+import type { ExperimentContext } from '@/lib/ab-test/types';
 
-export function HlsVideo({
+const VIDEO_MILESTONES = [25, 50, 75];
+
+function VideoPlayer({
   src,
   poster,
   className = '',
   autoPlay = false,
+  context,
+  videoTitle,
 }: {
   src: string;
   poster?: string;
   className?: string;
   autoPlay?: boolean;
+  context?: ExperimentContext | null;
+  videoTitle?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const trackedMilestones = useRef<Set<number>>(new Set());
+  const hasStarted = useRef(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -25,7 +35,48 @@ export function HlsVideo({
     if (autoPlay) {
       setTimeout(() => video.play().catch(console.error), 50);
     }
-  }, [src, autoPlay]);
+
+    // Video tracking
+    if (!context) return;
+
+    const title = videoTitle || src.split('/').pop() || 'unknown';
+
+    const handlePlay = () => {
+      if (!hasStarted.current) {
+        hasStarted.current = true;
+        trackVideoStart(context, title, video.duration || 0);
+        console.log('[Analytics] Video start:', title);
+      }
+    };
+
+    const handleTimeUpdate = () => {
+      if (!video.duration) return;
+      const percent = Math.round((video.currentTime / video.duration) * 100);
+
+      for (const milestone of VIDEO_MILESTONES) {
+        if (percent >= milestone && !trackedMilestones.current.has(milestone)) {
+          trackedMilestones.current.add(milestone);
+          trackVideoProgress(context, title, milestone, video.duration);
+          console.log(`[Analytics] Video progress: ${milestone}%`);
+        }
+      }
+    };
+
+    const handleEnded = () => {
+      trackVideoComplete(context, title, video.duration || 0);
+      console.log('[Analytics] Video complete:', title);
+    };
+
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('ended', handleEnded);
+
+    return () => {
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('ended', handleEnded);
+    };
+  }, [src, autoPlay, context, videoTitle]);
 
   return (
     <div className={`relative ${className}`}>
@@ -41,44 +92,6 @@ export function HlsVideo({
   );
 }
 
-export function HlsVideoModal({
-  isOpen,
-  onClose,
-  src,
-  poster,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  src: string;
-  poster?: string;
-}) {
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isOpen]);
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-5xl">
-        <button
-          onClick={onClose}
-          className="absolute -top-12 right-0 text-white transition hover:text-slate-300"
-        >
-          <X className="h-8 w-8" />
-        </button>
-        <div className="aspect-video overflow-hidden rounded-2xl bg-black shadow-2xl border border-white/10">
-          <HlsVideo src={src} poster={poster} className="h-full w-full" autoPlay={true} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function InlineVideoPlayer({
   src,
   poster,
@@ -89,6 +102,8 @@ export function InlineVideoPlayer({
   className = '',
   naturalAspect = false,
   playOnHover = false,
+  context,
+  videoTitle,
 }: {
   src: string;
   poster: string;
@@ -99,6 +114,8 @@ export function InlineVideoPlayer({
   className?: string;
   naturalAspect?: boolean;
   playOnHover?: boolean;
+  context?: ExperimentContext | null;
+  videoTitle?: string;
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isInView, setIsInView] = useState(false);
@@ -126,7 +143,14 @@ export function InlineVideoPlayer({
   if (isPlaying) {
     return (
       <div className={`relative aspect-video bg-black rounded-2xl overflow-hidden ${className}`}>
-        <HlsVideo src={src} poster={poster} className="h-full w-full" autoPlay={true} />
+        <VideoPlayer
+          src={src}
+          poster={poster}
+          className="h-full w-full"
+          autoPlay={true}
+          context={context}
+          videoTitle={videoTitle}
+        />
       </div>
     );
   }

@@ -10,6 +10,7 @@ import { BrandBuildersV2Hero } from '@/components/heroes/BrandBuildersV2Hero';
 import { BBV5Hero } from '@/components/heroes/BBV5Hero';
 import { TwoStepForm } from '@/components/shared/TwoStepForm';
 import { trackCtaClick } from '@/lib/ab-test/experiment';
+import { useScrollTracking } from '@/lib/ab-test/useScrollTracking';
 import type { ExperimentContext } from '@/lib/ab-test/types';
 
 // Data
@@ -63,6 +64,9 @@ interface BrandBuildersV2PageProps {
 }
 
 export function BrandBuildersV2Page({ heroVariant, context, category = 'contractors' }: BrandBuildersV2PageProps) {
+  // Track scroll depth
+  useScrollTracking(context);
+
   const smoothScrollTo = (
     e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
     targetId: string
@@ -121,6 +125,7 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
           colors={colors}
           mainVslVideoSrc={mainVslVideoSrc}
           onCtaClick={(e) => handleCtaClick(e, 'hero_primary')}
+          context={context}
         />
       ) : (
         <BBV5Hero
@@ -149,6 +154,8 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
               playOnHover={true}
               accentColor={colors.accent}
               className="w-full max-w-4xl mx-auto shadow-2xl mb-16 border border-slate-200"
+              context={context}
+              videoTitle="Main VSL"
             />
 
             <div className="mb-12 space-y-6">
@@ -275,6 +282,8 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
                   thumbnailFit="cover"
                   accentColor={colors.accent}
                   className="rounded-none rounded-t-2xl"
+                  context={context}
+                  videoTitle={`Case Study: ${study.title}`}
                 />
                 <div className="p-8 flex-1 flex flex-col">
                   <span
@@ -331,6 +340,8 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
                   thumbnailFit="cover"
                   accentColor={colors.accent}
                   className="rounded-none rounded-t-2xl"
+                  context={context}
+                  videoTitle={`Case Study: ${study.title}`}
                 />
                 <div className="p-8 flex-1 flex flex-col">
                   <span
@@ -384,6 +395,8 @@ export function BrandBuildersV2Page({ heroVariant, context, category = 'contract
             thumbnailFit="cover"
             accentColor={colors.yellow}
             className="w-full max-w-4xl mx-auto shadow-2xl mb-16 border border-slate-200"
+            context={context}
+            videoTitle="Testimonial Highlight Reel"
           />
 
           <div className="space-y-6 mb-16">

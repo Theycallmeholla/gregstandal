@@ -2,6 +2,7 @@
 
 import { CheckCircle } from 'lucide-react';
 import { InlineVideoPlayer } from '@/components/shared/video-player';
+import type { ExperimentContext } from '@/lib/ab-test/types';
 
 interface BrandBuildersV2HeroProps {
   colors: {
@@ -10,12 +11,14 @@ interface BrandBuildersV2HeroProps {
   };
   mainVslVideoSrc: string;
   onCtaClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+  context?: ExperimentContext | null;
 }
 
 export function BrandBuildersV2Hero({
   colors,
   mainVslVideoSrc,
   onCtaClick,
+  context,
 }: BrandBuildersV2HeroProps) {
   return (
     <section className="pt-32 pb-16 px-4 bg-white relative overflow-hidden">
@@ -54,6 +57,8 @@ export function BrandBuildersV2Hero({
           playOnHover={true}
           accentColor={colors.accent}
           className="w-full max-w-4xl mx-auto shadow-2xl mb-10 border border-slate-200"
+          context={context}
+          videoTitle="Hero VSL"
         />
 
         {/* Primary CTA */}

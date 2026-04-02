@@ -9,6 +9,7 @@ import { BrandBuildersV2Hero } from '@/components/heroes/BrandBuildersV2Hero';
 import { BBV6Hero } from '@/components/heroes/BBV6Hero';
 import { Step1Form } from '@/components/shared/Step1Form';
 import { trackCtaClick } from '@/lib/ab-test/experiment';
+import { useScrollTracking } from '@/lib/ab-test/useScrollTracking';
 import type { ExperimentContext } from '@/lib/ab-test/types';
 
 // Data
@@ -60,6 +61,9 @@ interface BBV6PageProps {
 }
 
 export function BBV6Page({ heroVariant, context }: BBV6PageProps) {
+  // Track scroll depth
+  useScrollTracking(context);
+
   const smoothScrollTo = (
     e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
     targetId: string
@@ -84,6 +88,7 @@ export function BBV6Page({ heroVariant, context }: BBV6PageProps) {
           colors={colors}
           mainVslVideoSrc={mainVslVideoSrc}
           formComponent={<Step1Form context={context} />}
+          context={context}
         />
       ) : (
         <>
@@ -173,6 +178,8 @@ export function BBV6Page({ heroVariant, context }: BBV6PageProps) {
                   thumbnailFit="cover"
                   accentColor={colors.accent}
                   className="rounded-none aspect-video"
+                  context={context}
+                  videoTitle={`Case Study: ${study.title}`}
                 />
                 <div className="p-8">
                   <span
