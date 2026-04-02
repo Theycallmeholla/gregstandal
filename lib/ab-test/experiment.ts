@@ -127,14 +127,20 @@ export function getOrAssignVariant(category: string): ExperimentContext | null {
 export function pushEvent(event: string, payload: Record<string, unknown> = {}): void {
   if (typeof window === 'undefined') return;
 
+  // Add debug_mode when GA_DEBUG env var is set
+  const eventPayload = {
+    ...payload,
+    ...(process.env.NEXT_PUBLIC_GA_DEBUG === 'true' ? { debug_mode: true } : {}),
+  };
+
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event, ...payload });
+  window.dataLayer.push({ event, ...eventPayload });
 
   // Try to send to gtag, with retry if not ready yet
   const sendToGtag = () => {
     if (typeof window.gtag === 'function') {
-      window.gtag('event', event, payload);
-      console.log('[Analytics] Sent to gtag:', event, payload);
+      window.gtag('event', event, eventPayload);
+      console.log('[Analytics] Sent to gtag:', event, eventPayload);
       return true;
     }
     return false;

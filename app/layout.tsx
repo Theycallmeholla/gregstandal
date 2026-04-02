@@ -124,8 +124,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Preconnect to external domains for performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://assets.cdn.filesafe.space" />
         <link rel="preconnect" href="https://newcapepictures.com" />
 
@@ -180,8 +178,9 @@ export default function RootLayout({
         )}
 
         {children}
+
+        <GoogleAnalytics gaId={GA4_ID} />
       </body>
-      <GoogleAnalytics gaId={GA4_ID} />
     </html>
   );
 }
