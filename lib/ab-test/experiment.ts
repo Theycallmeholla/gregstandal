@@ -187,6 +187,7 @@ export function trackExperimentImpression(context: ExperimentContext): void {
 export function trackCtaClick(
   context: ExperimentContext,
   location: string,
+  buttonText?: string,
   extra: Record<string, unknown> = {}
 ): void {
   pushEvent('cta_click', {
@@ -194,6 +195,64 @@ export function trackCtaClick(
     experiment_id: context.experimentId,
     variant_id: context.variant.id,
     cta_location: location,
+    ...(buttonText ? { button_text: buttonText } : {}),
+    ...extra,
+  });
+}
+
+/**
+ * Track case study click.
+ */
+export function trackCaseStudyClick(
+  context: ExperimentContext,
+  caseStudyId: string,
+  caseStudyTitle: string,
+  extra: Record<string, unknown> = {}
+): void {
+  pushEvent('case_study_click', {
+    category: context.category,
+    experiment_id: context.experimentId,
+    variant_id: context.variant.id,
+    case_study_id: caseStudyId,
+    case_study_title: caseStudyTitle,
+    ...extra,
+  });
+}
+
+/**
+ * Track form abandonment.
+ */
+export function trackFormAbandon(
+  context: ExperimentContext,
+  formId: string,
+  lastStep: number,
+  totalSteps: number,
+  extra: Record<string, unknown> = {}
+): void {
+  pushEvent('form_abandon', {
+    category: context.category,
+    experiment_id: context.experimentId,
+    variant_id: context.variant.id,
+    form_id: formId,
+    last_step: lastStep,
+    total_steps: totalSteps,
+    ...extra,
+  });
+}
+
+/**
+ * Track conversion (thank you page view).
+ */
+export function trackConversion(
+  context: ExperimentContext,
+  conversionType: string = 'form_completion',
+  extra: Record<string, unknown> = {}
+): void {
+  pushEvent('conversion', {
+    category: context.category,
+    experiment_id: context.experimentId,
+    variant_id: context.variant.id,
+    conversion_type: conversionType,
     ...extra,
   });
 }
