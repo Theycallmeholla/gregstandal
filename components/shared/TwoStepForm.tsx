@@ -278,7 +278,7 @@ export function TwoStepForm({ className = "", context, redirectPath }: TwoStepFo
             className="mt-0.5 h-5 w-5 rounded border-slate-300 text-[#FF6B00] focus:ring-[#FF6B00] cursor-pointer"
           />
           <span className="text-xs text-slate-500 leading-relaxed">
-            By submitting this form, I consent to receive SMS, emails, and calls from Brand Builders regarding my inquiry.
+            By submitting this form, I consent to receive SMS, emails, and calls from New Cape Pictures regarding my inquiry.
             Message and data rates may apply. I can opt out at any time by replying STOP.
           </span>
         </label>
@@ -299,7 +299,7 @@ export function TwoStepForm({ className = "", context, redirectPath }: TwoStepFo
           )}
         </button>
         <p className="mt-3 text-center text-xs text-slate-400">
-          We'll use this to personalize the next step.
+          We&apos;ll use this to personalize the next step.
         </p>
       </form>
     );

@@ -167,7 +167,7 @@ export function Step1Form({ className = '', context, redirectTo = '/contractors/
             className="mt-0.5 h-5 w-5 rounded border-slate-300 text-[#FF6B00] focus:ring-[#FF6B00] cursor-pointer"
           />
           <span className="text-xs text-slate-500 leading-relaxed">
-            By submitting this form, I consent to receive SMS, emails, and calls from Brand Builders regarding my inquiry.
+            By submitting this form, I consent to receive SMS, emails, and calls from New Cape Pictures regarding my inquiry.
             Message and data rates may apply. I can opt out at any time by replying STOP.
           </span>
         </label>
