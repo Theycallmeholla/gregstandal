@@ -14,11 +14,7 @@ interface BBV5HeroProps {
 
 const heroLabel = "STOP WASTING MONEY ON ADS";
 
-const heroHeadline = {
-  prefix: "Add ",
-  highlight: "20–30% More Booked Estimates",
-  suffix: " in 90 Days for Home Improvement & Home Service Contractors",
-};
+
 
 const heroSubheadline = "We turn your marketing into a system that makes your estimate a formality";
 
@@ -57,12 +53,11 @@ export function BBV5Hero({ colors, formComponent, onPillClick }: BBV5HeroProps) 
 
           {/* Headline with accent-colored highlight */}
           <h1
-            className="mb-6 text-4xl font-extrabold leading-[1.15] tracking-tight md:text-5xl lg:text-[3.5rem]"
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight mb-6 text-black"
             style={{ color: colors.primary }}
           >
-            {heroHeadline.prefix}
-            <span style={{ color: colors.accent }}>{heroHeadline.highlight}</span>
-            {heroHeadline.suffix}
+            Turn Your Marketing Into a System That Makes Your Estimate a Formality and Books{' '}
+            <span style={{ color: colors.accent }}>20–30% More Qualified Jobs</span> in 90 Days.
           </h1>
 
           {/* Subheadline */}

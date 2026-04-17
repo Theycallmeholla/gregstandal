@@ -11,27 +11,12 @@ export const CATEGORY_EXPERIMENTS: CategoryExperiments = {
     experimentId: 'contractors_hero_swap_v2',
     variants: [
       {
-        id: 'v2_original',
-        basePage: 'brand-builders-v2',
-        heroVariant: 'original',
-      },
-      {
         id: 'v5_original',
         basePage: 'bb-v5',
         heroVariant: 'original',
       },
-      {
-        id: 'v2_swapped',
-        basePage: 'brand-builders-v2',
-        heroVariant: 'swapped',
-      },
-      {
-        id: 'v5_swapped',
-        basePage: 'bb-v5',
-        heroVariant: 'swapped',
-      },
     ],
-    weights: [0.25, 0.25, 0.25, 0.25],
+    weights: [1.0],
   },
   // Future categories:
   // roofing: { experimentId: 'roofing_test_v1', variants: [...], weights: [...] },

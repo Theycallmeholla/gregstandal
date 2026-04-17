@@ -33,11 +33,11 @@ export function BBV6Hero({ colors, mainVslVideoSrc, formComponent, context }: BB
       <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 items-start relative z-10">
         <div className="lg:col-span-7">
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight mb-6 text-black"
             style={{ color: colors.primary }}
           >
-            Add <span style={{ color: colors.accent }}>20–30% More Booked Estimates</span> in 90
-            Days for Contractors
+            Turn Your Marketing Into a System That Makes Your Estimate a Formality and Books{' '}
+            <span style={{ color: colors.accent }}>20–30% More Qualified Jobs</span> in 90 Days.
           </h1>
           <p className="text-xl md:text-2xl text-slate-600 mb-10 leading-relaxed font-medium max-w-2xl">
             We build the trust, follow-up, and booking system that turns more of your existing
