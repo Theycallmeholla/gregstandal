@@ -38,7 +38,7 @@ export const testimonialVideos = {
   newCapeAndPbInnovations: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770dffe25ab69ff5981c.mp4',
   newCapePictures: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770d334fe75bf0f64a94.mp4',
   duraFix: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770d4a4efa206a0a41f7.mp4',
-  pbInnovations: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770dffe25a3287f5981b.mp4',
+  pbInnovations: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69ebbcd0a087d00dedd801d4.mp4',
   collabora: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770de24981e8aa15d365.mp4',
   janFence: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770de2498147ab15d366.mp4',
   oneRiverSchool: 'https://assets.cdn.filesafe.space/57pQj4H29OMJVaQ75R5q/media/69c5770d52ad3bf0a4d908a2.mp4',
