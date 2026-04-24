@@ -1,4 +1,16 @@
-import type { CategoryExperiments } from './types';
+import type { CategoryExperiments, VariantConfig } from './types';
+
+/**
+ * All historically valid variants. Used primarily to allow URL-based 
+ * overrides (?variant=...) for QA and previewing even if a variant
+ * is no longer active in the current experiment round.
+ */
+export const ALL_KNOWN_VARIANTS: VariantConfig[] = [
+  { id: 'v5_original', basePage: 'bb-v5', heroVariant: 'original' },
+  { id: 'v5_swapped', basePage: 'bb-v5', heroVariant: 'swapped' },
+  { id: 'v2_original', basePage: 'brand-builders-v2', heroVariant: 'original' },
+  { id: 'v2_swapped', basePage: 'brand-builders-v2', heroVariant: 'swapped' },
+];
 
 /**
  * Category-based experiment configuration.

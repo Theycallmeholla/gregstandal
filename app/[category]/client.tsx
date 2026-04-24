@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { CATEGORY_EXPERIMENTS } from '@/lib/ab-test/config';
+import { CATEGORY_EXPERIMENTS, ALL_KNOWN_VARIANTS } from '@/lib/ab-test/config';
 import { getOrAssignVariant, trackExperimentImpression } from '@/lib/ab-test/experiment';
 import type { ExperimentContext, VariantConfig } from '@/lib/ab-test/types';
 import { BrandBuildersV2Page } from '@/components/pages/BrandBuildersV2Page';
@@ -28,6 +28,8 @@ export function CategoryPageClient({ category }: CategoryPageClientProps) {
     const variantOverride = searchParams.get('variant');
     if (variantOverride) {
       const overrideVariant = experimentConfig.variants.find(
+        (v: VariantConfig) => v.id === variantOverride
+      ) || ALL_KNOWN_VARIANTS.find(
         (v: VariantConfig) => v.id === variantOverride
       );
       if (overrideVariant) {
