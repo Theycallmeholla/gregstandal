@@ -18,44 +18,49 @@ export function CategoryPageClient({ category }: CategoryPageClientProps) {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const experimentConfig = CATEGORY_EXPERIMENTS[category];
-    if (!experimentConfig) {
-      setIsLoading(false);
-      return;
-    }
-
-    // Check for URL param override (for testing): ?variant=v2_original
-    const variantOverride = searchParams.get('variant');
-    if (variantOverride) {
-      const overrideVariant = experimentConfig.variants.find(
-        (v: VariantConfig) => v.id === variantOverride
-      ) || ALL_KNOWN_VARIANTS.find(
-        (v: VariantConfig) => v.id === variantOverride
-      );
-      if (overrideVariant) {
-        const overrideContext: ExperimentContext = {
-          category,
-          experimentId: experimentConfig.experimentId,
-          variant: overrideVariant,
-        };
-        setContext(overrideContext);
+    // Defer execution to avoid synchronous setState inside effect (React Compiler warning)
+    const timer = setTimeout(() => {
+      const experimentConfig = CATEGORY_EXPERIMENTS[category];
+      if (!experimentConfig) {
         setIsLoading(false);
-        console.log('[A/B Test] URL Override:', overrideVariant.id);
         return;
       }
-    }
 
-    // Get or assign variant for this category (returns full ExperimentContext)
-    const experimentContext = getOrAssignVariant(category);
-    if (!experimentContext) {
+      // Check for URL param override (for testing): ?variant=v2_original
+      const variantOverride = searchParams.get('variant');
+      if (variantOverride) {
+        const overrideVariant = experimentConfig.variants.find(
+          (v: VariantConfig) => v.id === variantOverride
+        ) || ALL_KNOWN_VARIANTS.find(
+          (v: VariantConfig) => v.id === variantOverride
+        );
+        if (overrideVariant) {
+          const overrideContext: ExperimentContext = {
+            category,
+            experimentId: experimentConfig.experimentId,
+            variant: overrideVariant,
+          };
+          setContext(overrideContext);
+          setIsLoading(false);
+          console.log('[A/B Test] URL Override:', overrideVariant.id);
+          return;
+        }
+      }
+
+      // Get or assign variant for this category (returns full ExperimentContext)
+      const experimentContext = getOrAssignVariant(category);
+      if (!experimentContext) {
+        setIsLoading(false);
+        return;
+      }
+
+      console.log('[A/B Test] Assigned variant:', experimentContext.variant.id);
+      setContext(experimentContext);
+      trackExperimentImpression(experimentContext);
       setIsLoading(false);
-      return;
-    }
+    }, 0);
 
-    console.log('[A/B Test] Assigned variant:', experimentContext.variant.id);
-    setContext(experimentContext);
-    trackExperimentImpression(experimentContext);
-    setIsLoading(false);
+    return () => clearTimeout(timer);
   }, [category, searchParams]);
 
   // Show loading state while determining variant
